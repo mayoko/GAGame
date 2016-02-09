@@ -3,11 +3,11 @@ using System.Collections;
 
 public class GeneManager : MonoBehaviour {
     // 個体数
-    public int playerNum;
+    public static int playerNum;
     // プレイ時間(1 秒ごとに 15 個の動作を考える)
-    public int playTime;
+    public static int playTime;
     // 突然変位率
-    public float mutationRate;
+    public static float mutationRate;
     // player に関する情報をまとめたクラス
     public class PlayerParam
     {
@@ -15,7 +15,7 @@ public class GeneManager : MonoBehaviour {
         public float score;
     }
     // 各プレイヤーの情報をまとめた配列
-    public PlayerParam[] playerParam;
+    public static PlayerParam[] playerParam;
 
     // Use this for initialization
     void Start () {
