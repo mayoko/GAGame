@@ -113,7 +113,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: f6bc8956754020049b7bdf9956d9e2cc, type: 2}
+  - {fileID: 2100000, guid: 64cb2a1ccf4dcd64b96bee8532bb128d, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1037612732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d411e9d521e8baa4ba3d45bda0e87ede, type: 3}
+  m_Script: {fileID: 11500000, guid: 75e29471ca1fc784493113bd45374c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1263600105
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1514028760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dbeb43f1c07cbe4c950d659051cb7a9, type: 3}
+  m_Script: {fileID: 11500000, guid: fe099c7ac33a8a243991456377aeea5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreLabel: {fileID: 335319597}
