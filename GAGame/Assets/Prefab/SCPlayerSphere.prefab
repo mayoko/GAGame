@@ -12,7 +12,7 @@ GameObject:
   - 135: {fileID: 13594942}
   - 23: {fileID: 2300710}
   m_Layer: 0
-  m_Name: SakeruCheesePlayerSphere
+  m_Name: SCPlayerSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: SCPlayerSphere
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166650}

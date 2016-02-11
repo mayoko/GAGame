@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class SakeruCheeseGameController : MonoBehaviour {
+public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text scoreLabel;
     public int score;
     private float startTime;

@@ -97,7 +97,7 @@ GameObject:
   - 64: {fileID: 211848989}
   - 23: {fileID: 211848988}
   m_Layer: 0
-  m_Name: SakeruCheeseWallpaper
+  m_Name: Wallpaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 166650, guid: b0383aa90db02d546a10c4716e5f66fc, type: 2}
       propertyPath: m_Name
-      value: SakeruCheesePlayerSphere2
+      value: PlayerSphere2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0383aa90db02d546a10c4716e5f66fc, type: 2}
@@ -830,7 +830,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 166650, guid: b0383aa90db02d546a10c4716e5f66fc, type: 2}
       propertyPath: m_Name
-      value: SakeruCheesePlayerSphere1
+      value: PlayerSphere1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0383aa90db02d546a10c4716e5f66fc, type: 2}
@@ -876,7 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30377f97a43468348860bbfc9253e65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleVel: 360
 --- !u!1 &2070542519
 GameObject:
   m_ObjectHideFlags: 0

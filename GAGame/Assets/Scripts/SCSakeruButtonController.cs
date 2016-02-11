@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class SakeruCheeseSakeruButtonController : MonoBehaviour {
+public class SCSakeruButtonController : MonoBehaviour {
     public void GoToGeneCalc()
     {
         SceneManager.LoadScene("GeneCalc");
