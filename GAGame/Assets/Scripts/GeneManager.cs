@@ -23,7 +23,7 @@ public class GeneManager : MonoBehaviour {
     public static Player[] players;
 
     // 初期化する
-    static void init()
+    public static void init()
     {
         sbyte[] random = { -1, 0, 1 };
         players = new Player[param.playerNum];
@@ -39,7 +39,7 @@ public class GeneManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+        param = new Param();
 	}
 	
 	// Update is called once per frame
