@@ -799,9 +799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fea83b03bf9ade478e857b1c308ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumBar: {fileID: 326017213}
-  mutationRateBar: {fileID: 1348958463}
-  geneManager: {fileID: 1617644470}
+  playerNumBar: {fileID: 326017215}
+  mutationRateBar: {fileID: 1348958465}
 --- !u!114 &1130422949
 MonoBehaviour:
   m_ObjectHideFlags: 0
