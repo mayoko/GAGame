@@ -3,10 +3,14 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class gotogame : MonoBehaviour {
-
-	// シーンの移動(引数と入して渡されたシーンを呼ぶ)
-	public void toMainScene()
+    public UnityEngine.UI.Slider playerNumBar;
+    public UnityEngine.UI.Slider mutationRateBar;
+    // シーンの移動(引数と入して渡されたシーンを呼ぶ)
+    public void toMainScene()
 	{
-		SceneManager.LoadScene("SakeruCheese");
-	}
+        GeneManager.param.mutationRate = mutationRateBar.value;
+        GeneManager.param.playerNum = (int)(playerNumBar.value);
+        GeneManager.init();
+        SceneManager.LoadScene("SakeruCheese");
+    }
 }
