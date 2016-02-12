@@ -2,33 +2,44 @@
 using System.Collections;
 
 public class GeneManager : MonoBehaviour {
-    // 個体数
-    public int playerNum;
-    // プレイ時間(1 秒ごとに 15 個の動作を考える)
-    public int playTime;
-    // 突然変位率
-    public float mutationRate;
+    // パラメータに関する情報をまとめたクラス
+    public class Param
+    {
+        // 個体数
+        public int playerNum;
+        // プレイ時間(1 秒ごとに 15 個の動作を考える)
+        public int playTime = 10;
+        // 突然変位率
+        public float mutationRate;
+    }
+    public static Param param;
     // player に関する情報をまとめたクラス
-    public class PlayerParam
+    public class Player
     {
         public sbyte[] gene;
         public float score;
     }
     // 各プレイヤーの情報をまとめた配列
-    public PlayerParam[] playerParam;
+    public static Player[] players;
+
+    // 初期化する
+    static void init()
+    {
+        sbyte[] random = { -1, 0, 1 };
+        players = new Player[param.playerNum];
+        for (int i = 0; i < param.playerNum; i++)
+        {
+            players[i].gene = new sbyte[15 * param.playTime];
+            for (int j = 0; j < 15 * param.playTime; j++)
+            {
+                players[i].gene[j] = random[Random.Range(0, 3)];
+            }
+        }
+    }
 
     // Use this for initialization
     void Start () {
-        sbyte[] random = { -1, 0, 1 };
-        playerParam = new PlayerParam[playerNum];
-        for (int i = 0; i < playerNum; i++)
-        {
-            playerParam[i].gene = new sbyte[15 * playTime];
-            for (int j = 0; j < 15*playTime; j++)
-            {
-                playerParam[i].gene[j] = random[Random.Range(0, 3)];
-            }
-        }
+        
 	}
 	
 	// Update is called once per frame
