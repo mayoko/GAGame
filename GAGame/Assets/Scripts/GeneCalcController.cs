@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class GeneCalcController : MonoBehaviour {
 
 	Scene mainScene;
-	GeneManager.PlayerParam[] playerParam;//[groupsize]
+	GeneManager.Player[] playerParam;//[groupsize]
 
 	int[] mothers, fathers;//[childnum]
 	int[][] crossArrays;//[childnum][genesize]
@@ -32,7 +32,7 @@ public class GeneCalcController : MonoBehaviour {
 
 	void geneCalc(){
 		Array.Sort (playerParam, 
-			delegate(GeneManager.PlayerParam p1, GeneManager.PlayerParam p2) {
+			delegate(GeneManager.Player p1, GeneManager.Player p2) {
 				return p1.score.CompareTo (p2.score);
 			}
 		);
