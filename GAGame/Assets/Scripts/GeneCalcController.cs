@@ -7,13 +7,15 @@ using System.Collections.Generic;
 public class GeneCalcController : MonoBehaviour {
 
 	Scene mainScene;
-	GeneManager.PlayerParam[] playerParam;//[groupsize]
+
+	GeneManager.Player[] players;//[groupsize]
 	sbyte[][] childGene;//[childnum][genesize]
 
 	int[] mothers, fathers;//[childnum]
 	int[][] crossArrays;//[childnum][]
 	Dictionary<int,sbyte>[] mutationDicts;//[childnum]
 
+	GeneManager.Param param;
 	int selectionOption=0;
 	int groupSize = 30;
 	int surviveNum=4;
@@ -25,7 +27,7 @@ public class GeneCalcController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mainScene = SceneManager.GetSceneByName ("GameMain");
-		//playerParam=
+		//players=
 		geneCalc();
 		//  =newPlayerParam
 	}
@@ -36,7 +38,7 @@ public class GeneCalcController : MonoBehaviour {
 	}
 
 	void geneCalc(){
-		Array.Sort (playerParam, 
+		Array.Sort (players, 
 			delegate(GeneManager.Player p1, GeneManager.Player p2) {
 				return p1.score.CompareTo (p2.score);
 			}
@@ -56,7 +58,7 @@ public class GeneCalcController : MonoBehaviour {
 		childGene = new sbyte[childNum] [];
 		crossArrays = new int[childNum][];
 		for (int i = 0; i < childNum; i++) {
-			cross (playerParam [mothers [i]].gene, playerParam [fathers [i]].gene, out childGene [i],out crossArrays[i]);
+			cross (players [mothers [i]].gene, players [fathers [i]].gene, out childGene [i],out crossArrays[i]);
 		}
 		mutationDicts = new Dictionary<int, sbyte>[childNum];
 		for (int i = 0; i < childNum; i++) {
@@ -77,9 +79,9 @@ public class GeneCalcController : MonoBehaviour {
 			}
 			break;
 		case 1: //proportion to score
-			selectScoreAccumArray [0] = playerParam [0].score;
+			selectScoreAccumArray [0] = players [0].score;
 			for (int i = 1; i < groupSize; i++) {
-				selectScoreAccumArray [i] = selectScoreAccumArray [i - 1] + playerParam [i].score;
+				selectScoreAccumArray [i] = selectScoreAccumArray [i - 1] + players [i].score;
 			}
 			break;
 		}
