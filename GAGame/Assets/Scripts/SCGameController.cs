@@ -11,6 +11,7 @@ public class SCGameController : MonoBehaviour {
     {
         startTime = Time.time;
     }
+
     void Update()
     {
         // スコア算出
@@ -21,3 +22,5 @@ public class SCGameController : MonoBehaviour {
         scoreLabel.text = "Score: " + score.ToString();
     }
 }
+
+
