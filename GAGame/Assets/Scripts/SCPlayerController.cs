@@ -57,7 +57,7 @@ public class SCPlayerController : MonoBehaviour {
 
     public void Die()
     {
-        attr.score = gc.score;
+        attr.score = gc.getScore();
         Debug.Log(myNum.ToString() + "番のPlayerが" + gc.getCurrentFrame().ToString() + "fで死んでScoreは" + attr.score.ToString() + "でした．");
 
         // Destroy(child)だと子のtransformコンポーネントが死ぬだけなので注意
