@@ -8,16 +8,17 @@ public class GeneManager : MonoBehaviour {
         // 個体数
         public int playerNum;
         // プレイ時間(1 秒ごとに 15 個の動作を考える)
-        public int playTime = 10;
+        public int playTime;
         // 突然変位率
         public float mutationRate;
     }
-    public static Param param;
+    public static Param param = new Param();
     // player に関する情報をまとめたクラス
     public class Player
     {
         public sbyte[] gene;
         public float score;
+        public void geneReset(int size) { gene = new sbyte[size]; }
     }
     // 各プレイヤーの情報をまとめた配列
     public static Player[] players;
@@ -29,7 +30,8 @@ public class GeneManager : MonoBehaviour {
         players = new Player[param.playerNum];
         for (int i = 0; i < param.playerNum; i++)
         {
-            players[i].gene = new sbyte[15 * param.playTime];
+            players[i] = new Player();
+            players[i].geneReset(15 * param.playTime);
             for (int j = 0; j < 15 * param.playTime; j++)
             {
                 players[i].gene[j] = random[Random.Range(0, 3)];
@@ -40,6 +42,7 @@ public class GeneManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         param = new Param();
+        param.playTime = 10;
 	}
 	
 	// Update is called once per frame
