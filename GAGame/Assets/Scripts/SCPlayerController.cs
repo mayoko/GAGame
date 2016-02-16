@@ -5,10 +5,17 @@ public class SCPlayerController : MonoBehaviour {
 
     public int myNum;
     public GeneManager.Player attr;
+    public SCGameController gc;
 
     // angleVelにはstaticをつけないとありえないほど回転が遅くなる（多分最適化が効かないせい）
     // cexen環境ではdeltaTimeは約 0.0165 s/frame
     public static float angleVel = 360.0f * 0.0165f; // 角速度[度/frame]
+
+    void Start()
+    {
+        gc = GameObject.Find("GameController").GetComponent<SCGameController>();
+        Debug.Log(gc.score);
+    }
 
     void Update() {
         // ユーザー入力の検出
@@ -25,6 +32,13 @@ public class SCPlayerController : MonoBehaviour {
 
         // 自身をy-軸周りに回転
         // 回転角[度/frame]は1フレームの間隔[s/frame]によらず一定（再現性が重要ゆえ）
-        transform.Rotate(0, sgn*angleVel, 0);
+        if(myNum == 0) transform.Rotate(0, sgn*angleVel, 0);
+    }
+
+    void Die()
+    {
+        Debug.Log(attr);
+        attr.score = gc.score;
+        Destroy(gameObject);
     }
 }

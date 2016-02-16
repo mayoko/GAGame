@@ -7,8 +7,7 @@ public class SCPlayerSphereController : MonoBehaviour {
     {
         if (hit.CompareTag ("Enemy"))
         {
-            Debug.Log("unko");
-            SceneManager.LoadScene("GeneCalc");
+            gameObject.transform.parent.gameObject.SendMessage("Die");
         }
     }
 }

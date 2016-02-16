@@ -30,7 +30,7 @@ GameObject:
   - 4: {fileID: 429908}
   - 114: {fileID: 11434384}
   m_Layer: 0
-  m_Name: Player
+  m_Name: SCPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
