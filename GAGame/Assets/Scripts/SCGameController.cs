@@ -7,12 +7,14 @@ public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text aliveLabel;
     public GameObject sakeruButtonObject;
     public SCPlayerController playerPrefab;
+    public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
 
     void Start()
     {
         // インフラ周り
         firstFrame = Time.frameCount;
+        finalFrame = GeneManager.param.playFrame-1;
 
         // Player周り
         for (int i=0; i<GeneManager.players.Length; i++)
@@ -29,6 +31,8 @@ public class SCGameController : MonoBehaviour {
             player.myNum = -1;
             player.mode = "manual";
             player.attr = new GeneManager.Player();
+            // sbyteの既定値は0なので自動的に全部0が入る（リアルタイムに更新していく）
+            // https://msdn.microsoft.com/ja-jp/library/83fhsxwc.aspx
             player.attr.geneReset(GeneManager.param.playFrame); // このへんの生成はあとでGeneManagerに投げたい
         }
     }
@@ -68,7 +72,7 @@ public class SCGameController : MonoBehaviour {
     // 今後の拡張性を考えて大げさにscore取得関数
     public int getScore()
     {
-        return getCurrentFrame(); // 生き残っているフレーム数そのまま
+        return getCurrentFrame()+1; // 生き残っているフレーム数
     }
 }
 
