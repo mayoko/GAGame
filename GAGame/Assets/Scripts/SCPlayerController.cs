@@ -5,7 +5,7 @@ public class SCPlayerController : MonoBehaviour {
 
     public int myNum;
     public GeneManager.Player attr;
-    public SCGameController gc;
+    public SCGameController gc; // PrefabにはSceneオブジェクトはアサインできない
 
     // angleVelにはstaticをつけないとありえないほど回転が遅くなる（多分最適化が効かないせい）
     // cexen環境ではdeltaTimeは約 0.0165 s/frame
@@ -14,7 +14,6 @@ public class SCPlayerController : MonoBehaviour {
     void Start()
     {
         gc = GameObject.Find("GameController").GetComponent<SCGameController>();
-        Debug.Log(gc.score);
     }
 
     void Update() {
@@ -35,10 +34,11 @@ public class SCPlayerController : MonoBehaviour {
         if(myNum == 0) transform.Rotate(0, sgn*angleVel, 0);
     }
 
-    void Die()
+    public void Die()
     {
-        Debug.Log(attr);
         attr.score = gc.score;
+        // Destroy(child)だと子のtransformコンポーネントが死ぬだけなので注意
+        foreach (Transform child in transform) Destroy(child.gameObject);
         Destroy(gameObject);
     }
 }

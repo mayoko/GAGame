@@ -7,7 +7,10 @@ public class SCPlayerSphereController : MonoBehaviour {
     {
         if (hit.CompareTag ("Enemy"))
         {
-            gameObject.transform.parent.gameObject.SendMessage("Die");
+            // transformからたどる場合は出てくるものもtransformだからgameObjectを取らないといけない
+            // SendMessageは重いので頻繁に呼ぶものには使わない
+            // gameObject.transform.parent.gameObject.SendMessage("Die");
+            gameObject.transform.parent.GetComponent<SCPlayerController>().Die();
         }
     }
 }
