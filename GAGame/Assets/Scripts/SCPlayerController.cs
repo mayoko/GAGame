@@ -20,7 +20,7 @@ public class SCPlayerController : MonoBehaviour {
     void Update() {
         int cf = gc.getCurrentFrame();
         // Player操作
-        int sgn; // 1: 時計回り，-1: 反時計回り，0: 静止
+        sbyte sgn; // 1: 時計回り，-1: 反時計回り，0: 静止
         switch (mode)
         {
             case "manual":
@@ -35,6 +35,9 @@ public class SCPlayerController : MonoBehaviour {
                 if (input > 0) sgn = 1;
                 else if (input < 0) sgn = -1;
                 else sgn = 0;
+
+                // 操作の記録
+                attr.gene[cf] = sgn;
                 break;
             case "auto":
                 if (cf < attr.gene.Length) sgn = attr.gene[cf];
