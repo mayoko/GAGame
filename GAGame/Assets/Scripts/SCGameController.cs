@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text scoreLabel;
+    public UnityEngine.UI.Text aliveLabel;
+    public GameObject sakeruButtonObject;
     public SCPlayerController playerPrefab;
     private int firstFrame; // frame数計測用
 
@@ -33,8 +35,28 @@ public class SCGameController : MonoBehaviour {
 
     void Update()
     {
-        // スコア表示
+        // 残存Player数カウント
+        int alive = GameObject.FindGameObjectsWithTag("Player").Length;
+
+        // UI表示
         scoreLabel.text = "Score: " + getScore().ToString();
+        aliveLabel.text = "Alive: " + alive.ToString();
+
+        // ゲーム終了処理
+        if (alive == 0) finishGame();
+    }
+
+    void finishGame()
+    {
+        // Scoreの更新はひとまず止めなくていいや
+        // 高速実行の際は即終了するようなオプションをParamにつけてもらいたい予定
+        if (true)
+        {
+            sakeruButtonObject.SetActive(true);
+        } else
+        {
+            // SceneManager.LoadScene("GeneCalc");
+        }
     }
 
     // 現在のframe番号を自分で数えると他のオブジェクトとの実行順が気になるのでUnityに頼る

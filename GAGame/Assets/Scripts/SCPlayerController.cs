@@ -19,7 +19,7 @@ public class SCPlayerController : MonoBehaviour {
 
     void Update() {
         int cf = gc.getCurrentFrame();
-        // 操作
+        // Player操作
         int sgn; // 1: 時計回り，-1: 反時計回り，0: 静止
         switch (mode)
         {
