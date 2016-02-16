@@ -19,7 +19,16 @@ public class SCGameController : MonoBehaviour {
             // Playerを量産
             SCPlayerController player = Instantiate(playerPrefab);
             player.myNum = i;
+            player.mode = "auto";
             player.attr = GeneManager.players[i];
+        }
+        {
+            // 手動入力のPlayer
+            SCPlayerController player = Instantiate(playerPrefab);
+            player.myNum = -1;
+            player.mode = "manual";
+            player.attr = new GeneManager.Player();
+            player.attr.geneReset(GeneManager.param.playFrame); // このへんの生成はあとでGeneManagerに投げたい
         }
     }
 
