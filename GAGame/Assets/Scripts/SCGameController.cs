@@ -4,19 +4,27 @@ using UnityEngine.SceneManagement;
 
 public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text scoreLabel;
+    public SCPlayerController playerPrefab;
+    public int count = -1;
     public int score;
-    private float startTime;
 
     void Start()
     {
-        startTime = Time.time;
+        // Player周り
+        for (int i=0; i<GeneManager.players.Length; i++)
+        {
+            // Playerを量産
+            SCPlayerController player = Instantiate(playerPrefab);
+            player.myNum = i;
+            player.attr = GeneManager.players[i];
+        }
     }
 
     void Update()
     {
+        count++; // 0はじまり
         // スコア算出
-        float timeElapsed = Time.time - startTime;
-        score = Mathf.RoundToInt(timeElapsed * 100);
+        score = count;
 
         // スコア表示
         scoreLabel.text = "Score: " + score.ToString();

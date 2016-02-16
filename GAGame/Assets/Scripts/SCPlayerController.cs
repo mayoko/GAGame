@@ -2,9 +2,14 @@
 using System.Collections;
 
 public class SCPlayerController : MonoBehaviour {
+
+    public int myNum;
+    public GeneManager.Player attr;
+
     // angleVelにはstaticをつけないとありえないほど回転が遅くなる（多分最適化が効かないせい）
     // cexen環境ではdeltaTimeは約 0.0165 s/frame
     public static float angleVel = 360.0f * 0.0165f; // 角速度[度/frame]
+
     void Update() {
         // ユーザー入力の検出
         // 右入力で時計回り(+)，左入力で反時計回り(-)，無入力で静止
