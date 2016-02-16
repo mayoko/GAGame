@@ -13,4 +13,5 @@ public class gotogame : MonoBehaviour {
         GeneManager.init();
         SceneManager.LoadScene("SakeruCheese");
     }
+
 }
