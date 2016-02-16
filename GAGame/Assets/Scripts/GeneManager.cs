@@ -17,7 +17,7 @@ public class GeneManager : MonoBehaviour {
     public class Player
     {
         public sbyte[] gene;
-        public float score;
+        public float score=0;
         public void geneReset(int size) { gene = new sbyte[size]; }
     }
     // 各プレイヤーの情報をまとめた配列
