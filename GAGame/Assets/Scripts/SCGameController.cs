@@ -34,6 +34,16 @@ public class SCGameController : MonoBehaviour {
             // sbyteの既定値は0なので自動的に全部0が入る（リアルタイムに更新していく）
             // https://msdn.microsoft.com/ja-jp/library/83fhsxwc.aspx
             player.attr.geneReset(GeneManager.param.playFrame); // このへんの生成はあとでGeneManagerに投げたい
+
+            // UserのPlayerだけ色変更して特別な手前表示レイヤーに移動
+            // ひとまず子がすべてsphereだと思って何も考えず書き換える
+            // ちなみにmaterialをsharedMaterialにすると全Playerの見た目が変わる
+            // http://kan-kikuchi.hatenablog.com/entry/Material
+            foreach (Transform child in player.transform)
+            {
+                child.GetComponent<Renderer>().material.color = Color.green;
+                child.gameObject.layer = 8; // User
+            }
         }
     }
 
