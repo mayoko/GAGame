@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System; //Split,Single.Parse
 
 public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text scoreLabel;
@@ -9,6 +10,15 @@ public class SCGameController : MonoBehaviour {
     public SCPlayerController playerPrefab;
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
+
+	public GameObject sakeruEnemyObject;
+	public TextAsset enemyPattern;
+	public float[][] enemyInfo; 
+	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(生成フレーム,生成位置,速度)
+	public int enemyNum = 0; //次のEnemyが何番目かを保持.0から
+	private int enemyFrame = 99999999; //次のEnemyが出現するフレームを保持
+	private int enemyPop; //Enemyの数
+
 
     void Start()
     {
@@ -45,6 +55,10 @@ public class SCGameController : MonoBehaviour {
                 child.gameObject.layer = 8; // User
             }
         }
+
+		//EnemyのPatternの外部ファイルからの読み出し
+		ReadEnemyPattern ();
+		enemyFrame = (int)enemyInfo [0] [0]; //最初に生成するEnemyのFrameを保持
     }
 
     void Update()
@@ -58,6 +72,21 @@ public class SCGameController : MonoBehaviour {
 
         // ゲーム終了処理
         if (alive == 0) finishGame();
+
+		//Enemy生成処理
+		if (getCurrentFrame() >= enemyFrame) {
+			GameObject enemy = Instantiate (sakeruEnemyObject,
+											new Vector3 (6, 0, enemyInfo [enemyNum] [1]),
+											Quaternion.identity) as GameObject;
+			SCEnemyController scec = enemy.GetComponent<SCEnemyController> ();
+			scec.enemySpeed = enemyInfo [enemyNum] [2];
+			enemyNum++;
+			if (enemyNum < enemyPop) {
+				enemyFrame = (int)enemyInfo[enemyNum][0];
+			} else {
+				enemyFrame = 99999999; //これ以上Enemyを生成しない
+			}
+		}
     }
 
     void finishGame()
@@ -84,6 +113,20 @@ public class SCGameController : MonoBehaviour {
     {
         return getCurrentFrame()+1; // 生き残っているフレーム数
     }
+
+	//Enemyのデータを外部ファイルから読みだす
+	void ReadEnemyPattern(){
+		// ExternalFileフォルダ内のEnemyPattern.txtファイルを読み込む
+		string[] patternInfo = enemyPattern.text.Split("\n"[0]);
+		enemyPop = patternInfo.Length;
+		enemyInfo = new float[enemyPop][];
+
+		string[] eachInfo;
+		for (int i = 0; i < enemyPop; i++) {
+			eachInfo = patternInfo [i].Split (","[0]);
+			enemyInfo [i] = new float[] { Single.Parse (eachInfo [0]), Single.Parse (eachInfo [1]), Single.Parse (eachInfo [2]) }; 
+		}
+	}
 }
 
 

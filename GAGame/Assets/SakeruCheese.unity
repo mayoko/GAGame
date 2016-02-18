@@ -565,7 +565,6 @@ GameObject:
   - 20: {fileID: 1341189262}
   - 92: {fileID: 1341189261}
   - 124: {fileID: 1341189260}
-  - 81: {fileID: 1341189259}
   m_Layer: 0
   m_Name: Front Camera
   m_TagString: MainCamera
@@ -573,13 +572,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1341189259
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1341189258}
-  m_Enabled: 1
 --- !u!124 &1341189260
 Behaviour:
   m_ObjectHideFlags: 0
@@ -887,6 +879,9 @@ MonoBehaviour:
   sakeruButtonObject: {fileID: 1037612732}
   playerPrefab: {fileID: 11434384, guid: 0d4f6e4c27c0f9e4188b70924243897c, type: 2}
   finalFrame: 0
+  sakeruEnemyObject: {fileID: 188276, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
+  enemyPattern: {fileID: 4900000, guid: c6222666dad589740a6fd24f9bb36a6c, type: 3}
+  enemyNum: 0
 --- !u!4 &1514028762
 Transform:
   m_ObjectHideFlags: 0
@@ -899,52 +894,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
---- !u!1001 &1896108373
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 402278, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 188276, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &2070542519
 GameObject:
   m_ObjectHideFlags: 0
