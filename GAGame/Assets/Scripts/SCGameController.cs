@@ -74,8 +74,12 @@ public class SCGameController : MonoBehaviour {
         if (alive == 0) finishGame();
 
 		//Enemy生成処理
-		if (getCurrentFrame() > enemyFrame) {
-			Instantiate (sakeruEnemyObject, new Vector3(6, 0, enemyInfo[enemyNum][1]), Quaternion.identity);
+		if (getCurrentFrame() >= enemyFrame) {
+			GameObject enemy = Instantiate (sakeruEnemyObject,
+											new Vector3 (6, 0, enemyInfo [enemyNum] [1]),
+											Quaternion.identity) as GameObject;
+			SCEnemyController scec = enemy.GetComponent<SCEnemyController> ();
+			scec.enemySpeed = enemyInfo [enemyNum] [2];
 			enemyNum++;
 			if (enemyNum < enemyPop) {
 				enemyFrame = (int)enemyInfo[enemyNum][0];
