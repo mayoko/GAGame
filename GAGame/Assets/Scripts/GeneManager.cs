@@ -29,6 +29,7 @@ public class GeneManager : MonoBehaviour {
         players = new Player[param.playerNum];
         for (int i = 0; i < param.playerNum; i++)
         {
+			players [i] = new Player ();
             players[i].gene = new sbyte[15 * param.playTime];
             for (int j = 0; j < 15 * param.playTime; j++)
             {
