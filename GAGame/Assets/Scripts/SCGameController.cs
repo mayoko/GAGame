@@ -70,7 +70,7 @@ public class SCGameController : MonoBehaviour {
         int alive = GameObject.FindGameObjectsWithTag("Player").Length;
 
         // UI表示
-        scoreLabel.text = "Score: " + getScore().ToString();
+        scoreLabel.text = "Score: " + getScore().ToString() + " / " + getMaxScore().ToString();
         aliveLabel.text = "Alive: " + alive.ToString();
 
         // ゲーム終了処理
@@ -114,7 +114,11 @@ public class SCGameController : MonoBehaviour {
     // 今後の拡張性を考えて大げさにscore取得関数
     public int getScore()
     {
-        return getCurrentFrame()+1; // 生き残っているフレーム数
+        return getCurrentFrame() + 1; // 生き残っているフレーム数
+    }
+    public int getMaxScore()
+    {
+        return finalFrame + 1;
     }
 
 	//Enemyのデータを外部ファイルから読みだす

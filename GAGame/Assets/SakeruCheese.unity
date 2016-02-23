@@ -304,7 +304,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: -130}
+  m_AnchoredPosition: {x: 540, y: -130}
   m_SizeDelta: {x: 500, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &925163978
@@ -878,6 +878,8 @@ MonoBehaviour:
   aliveLabel: {fileID: 567579921}
   sakeruButtonObject: {fileID: 1037612732}
   playerPrefab: {fileID: 11434384, guid: 0d4f6e4c27c0f9e4188b70924243897c, type: 2}
+  geneSize: 0
+  fpg: 5
   finalFrame: 0
   sakeruEnemyObject: {fileID: 188276, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
   enemyPattern: {fileID: 4900000, guid: c6222666dad589740a6fd24f9bb36a6c, type: 3}
