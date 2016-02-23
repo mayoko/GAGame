@@ -8,6 +8,8 @@ public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text aliveLabel;
     public GameObject sakeruButtonObject;
     public SCPlayerController playerPrefab;
+    public int geneSize;
+    public int fpg = 5; // Frames per Gene. 1geneの指示する動作を何フレーム継続するか
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
 
@@ -23,8 +25,9 @@ public class SCGameController : MonoBehaviour {
     void Start()
     {
         // インフラ周り
+        geneSize = GeneManager.param.playFrame; // 変数名はへんだがそう読み替えることになった
         firstFrame = Time.frameCount;
-        finalFrame = GeneManager.param.playFrame-1;
+        finalFrame = fpg*geneSize-1;
 
         // Player周り
         for (int i=0; i<GeneManager.players.Length; i++)

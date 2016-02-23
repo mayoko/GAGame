@@ -19,6 +19,8 @@ public class SCPlayerController : MonoBehaviour {
 
     void Update() {
         int cf = gc.getCurrentFrame();
+        int cg = cf / gc.fpg; // currentGene
+        int cgr = cf % gc.fpg; // currentGeneRemainder (雑な命名)
 
         // Player操作
         {
@@ -39,14 +41,19 @@ public class SCPlayerController : MonoBehaviour {
                     else sgn = 0;
 
                     // 操作の記録
-                    attr.gene[cf] = sgn;
+                    if (cgr == 0 && cg < gc.geneSize) attr.gene[cg] = sgn; // ドンピシャの入力はギリギリ受け付ける
+                    else if (cg + 1 < gc.geneSize) attr.gene[cg + 1] = sgn; // それ以降の入力は次のタイミングの動作の予約
+                    else Debug.LogWarning("manualのほうでgeneの長さが足りてないよ: cf=" + cf.ToString());
+
+                    // 今回の操作 (sgn変数を使いまわしててちょっとわかりづらい)
+                    sgn = attr.gene[cg];
                     break;
                 case "auto":
-                    if (cf < attr.gene.Length) sgn = attr.gene[cf];
+                    if (cg < gc.geneSize) sgn = attr.gene[cg];
                     else
                     {
                         sgn = 0;
-                        Debug.LogWarning("geneの長さが足りてないよ: cf=" + cf.ToString());
+                        Debug.LogWarning("autoのほうでgeneの長さが足りてないよ: cf=" + cf.ToString());
                     }
                     break;
                 default:
