@@ -26,16 +26,21 @@ public class GeneCalcController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mainScene = SceneManager.GetSceneByName ("GameMain");
-		//players=
-		geneCalc();
-		//  =newPlayerParam
-	}
+        // 変数の初期化
+        groupSize = GeneManager.param.playerNum;
+        mutationRate = GeneManager.param.mutationRate;
+        mainScene = SceneManager.GetSceneByName("GameMain");
+        players = GeneManager.players;
+        geneCalc();
+        //  =newPlayerParam
+        Debug.Log("gene clac completed!");
+        SceneManager.LoadScene("SakeruCheese");
+    }
 
 	// Update is called once per frame
 	void Update () {
-
-	}
+        
+    }
 
 	void geneCalc(){
 		Array.Sort (players, 
@@ -64,6 +69,7 @@ public class GeneCalcController : MonoBehaviour {
 		for (int i = 0; i < childNum; i++) {
 			mutation (ref childGene [i], out mutationDicts [i]);
 		}
+        GeneManager.players = players;
 	}
 
 	void selectPrepare(out float[] selectScoreAccumArray)
