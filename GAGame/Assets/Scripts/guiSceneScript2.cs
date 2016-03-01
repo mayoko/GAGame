@@ -3,20 +3,20 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class guiSceneScript2 : MonoBehaviour {
-	public Canvas canvas;
+	//public Canvas canvas;
 	public Text text;
 	public Slider slider;
 
 	// Use this for initialization
-	void Start () {
-		canvas.enabled = false;
-		text.text = "ready...";
-	}
+	//void Start () {
+		//canvas.enabled = false;
+		//text.text = "ready...";
+	//}
 
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Space)) {
-			canvas.enabled = true;
+			//canvas.enabled = true;
 		}
 	}
 

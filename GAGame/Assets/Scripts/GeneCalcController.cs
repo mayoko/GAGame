@@ -27,7 +27,7 @@ public class GeneCalcController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mainScene = SceneManager.GetSceneByName ("GameMain");
-		//players=
+		//players =
 		geneCalc();
 		//  =newPlayerParam
 	}

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class guiSceneScript : MonoBehaviour {
+public class guiSceneScript3 : MonoBehaviour {
 	//public Canvas canvas;
 	public Text text;
 	public Slider slider;
@@ -12,7 +12,7 @@ public class guiSceneScript : MonoBehaviour {
 		//canvas.enabled = false;
 		//text.text = "ready...";
 	//}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Space)) {
@@ -20,8 +20,8 @@ public class guiSceneScript : MonoBehaviour {
 		}
 	}
 
-		public void OnsliderChanged ()
+	public void OnsliderChanged ()
 	{
-		text.text = "個体数 = " + slider.value;
+		text.text = "フレーム数 = " + slider.value;
 	}
 }
