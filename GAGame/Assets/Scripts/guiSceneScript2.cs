@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class guiSceneScript : MonoBehaviour {
+public class guiSceneScript2 : MonoBehaviour {
 	public Canvas canvas;
 	public Text text;
 	public Slider slider;
@@ -12,7 +12,7 @@ public class guiSceneScript : MonoBehaviour {
 		canvas.enabled = false;
 		text.text = "ready...";
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Space)) {
@@ -20,8 +20,11 @@ public class guiSceneScript : MonoBehaviour {
 		}
 	}
 
-		public void OnsliderChanged ()
+	public void OnsliderChanged ()
 	{
-		text.text = "個体数 = " + slider.value;
+		//text.text = "突然変異率 = " + slider.value;
+		float x = slider.value;
+		x = (int)(x / 0.01f); 
+		text.text = "突然変異率 = " + x.ToString() + "%";
 	}
 }
