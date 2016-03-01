@@ -13,10 +13,13 @@ public class SCGameController : MonoBehaviour {
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
 
-	public GameObject sakeruEnemyObject;
+	public GameObject sakeruEnemySphere;
+	public GameObject sakeruEnemyCube;
+
+	GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern;
 	public float[][] enemyInfo; 
-	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(生成フレーム,生成位置,速度)
+	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(生成フレーム,生成位置,速度,形,サイズ,方向)
 	public int enemyNum = 0; //次のEnemyが何番目かを保持.0から
 	private int enemyFrame = 99999999; //次のEnemyが出現するフレームを保持
 	private int enemyPop; //Enemyの数
@@ -78,11 +81,18 @@ public class SCGameController : MonoBehaviour {
 
 		//Enemy生成処理
 		if (getCurrentFrame() >= enemyFrame) {
+			if (enemyInfo [enemyNum] [3] == 0) {
+				sakeruEnemyObject = sakeruEnemySphere;
+			} else {
+				sakeruEnemyObject = sakeruEnemyCube;
+			}
 			GameObject enemy = Instantiate (sakeruEnemyObject,
-											new Vector3 (6, 0, enemyInfo [enemyNum] [1]),
+											new Vector3 (-3+9*enemyInfo [enemyNum] [5], 0, enemyInfo [enemyNum] [1]),
 											Quaternion.identity) as GameObject;
 			SCEnemyController scec = enemy.GetComponent<SCEnemyController> ();
 			scec.enemySpeed = enemyInfo [enemyNum] [2];
+			scec.enemyDirection = enemyInfo [enemyNum] [5];
+			scec.transform.localScale = new Vector3 (enemyInfo [enemyNum] [4], enemyInfo [enemyNum] [4], enemyInfo [enemyNum] [4]);
 			enemyNum++;
 			if (enemyNum < enemyPop) {
 				enemyFrame = (int)enemyInfo[enemyNum][0];
@@ -131,7 +141,9 @@ public class SCGameController : MonoBehaviour {
 		string[] eachInfo;
 		for (int i = 0; i < enemyPop; i++) {
 			eachInfo = patternInfo [i].Split (","[0]);
-			enemyInfo [i] = new float[] { Single.Parse (eachInfo [0]), Single.Parse (eachInfo [1]), Single.Parse (eachInfo [2]) }; 
+			enemyInfo [i] = new float[] { Single.Parse (eachInfo [0]), Single.Parse (eachInfo [1]),
+										  Single.Parse (eachInfo [2]), Single.Parse (eachInfo [3]),
+										  Single.Parse (eachInfo [4]), Single.Parse (eachInfo [5])}; 
 		}
 	}
 }

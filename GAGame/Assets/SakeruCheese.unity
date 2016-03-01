@@ -881,7 +881,8 @@ MonoBehaviour:
   geneSize: 0
   fpg: 5
   finalFrame: 0
-  sakeruEnemyObject: {fileID: 188276, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
+  sakeruEnemySphere: {fileID: 188276, guid: f34a96bb9e2da0845b43f1fba1fc51df, type: 2}
+  sakeruEnemyCube: {fileID: 127174, guid: e2c20913640da6d41bde7978d7d8f301, type: 2}
   enemyPattern: {fileID: 4900000, guid: c6222666dad589740a6fd24f9bb36a6c, type: 3}
   enemyNum: 0
 --- !u!4 &1514028762
