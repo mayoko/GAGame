@@ -10,6 +10,7 @@ public class GeneCalcController : MonoBehaviour {
 
 	GeneManager.Player[] players;//[groupsize]
 	sbyte[][] childGene;//[childnum][genesize]
+	sbyte[][] surviveGene;//[survivenum][genesize]
 
 	int[] mothers, fathers;//[childnum]
 	int[][] crossArrays;//[childnum][]
@@ -17,39 +18,58 @@ public class GeneCalcController : MonoBehaviour {
 
 	GeneManager.Param param;
 	int selectionOption=0;
-	int groupSize = 30;
+	int groupSize;
 	int surviveNum=4;
-	int geneSize=100;
+	int geneSize;
 	int topSelectNum=10;
 	int crossOption=1;
-	float mutationRate=0.08f;
+	float mutationRate;
+	int childNum;
 
 	// Use this for initialization
 	void Start () {
+		// 変数の初期化
+		groupSize = GeneManager.param.playerNum;
+		mutationRate = GeneManager.param.mutationRate;
+		geneSize = GeneManager.param.playFrame;
+		childNum=groupSize-surviveNum;
 		mainScene = SceneManager.GetSceneByName ("GameMain");
-		//players =
-		geneCalc();
-		//  =newPlayerParam
-	}
+
+		players = GeneManager.players;
+		geneCalc ();
+		for (int i = 0; i < surviveNum; i++) {
+			players [i].gene = surviveGene [i];
+		}
+		for (int i = 0; i < childNum; i++) {
+			players [surviveNum + i].gene = childGene [i];
+		}
+        Debug.Log("gene clac completed!");
+        SceneManager.LoadScene("SakeruCheese");
+    }
+
 
 	// Update is called once per frame
 	void Update () {
-
-	}
+        
+    }
 
 	void geneCalc(){
 		Array.Sort (players, 
 			delegate(GeneManager.Player p1, GeneManager.Player p2) {
-				return p1.score.CompareTo (p2.score);
+				return p2.score.CompareTo (p1.score);
 			}
 		);
 
 		float[] selectScoreAccumArray;
 		selectPrepare (out selectScoreAccumArray);
 
-		int childNum=groupSize-surviveNum;
 		mothers = new int[childNum];
 		fathers = new int[childNum];
+
+		surviveGene = new sbyte[surviveNum][];
+		for (int i = 0; i < surviveNum; i++) {
+			surviveGene [i] = players [i].gene;
+		}
 
 		for (int i = 0; i < childNum; i++) {
 			SelectParentRandom (selectScoreAccumArray, out mothers [i], out fathers [i]);
@@ -64,6 +84,7 @@ public class GeneCalcController : MonoBehaviour {
 		for (int i = 0; i < childNum; i++) {
 			mutation (ref childGene [i], out mutationDicts [i]);
 		}
+        GeneManager.players = players;
 	}
 
 	void selectPrepare(out float[] selectScoreAccumArray)
