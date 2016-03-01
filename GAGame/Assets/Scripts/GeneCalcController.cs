@@ -34,6 +34,7 @@ public class GeneCalcController : MonoBehaviour {
 		geneSize = GeneManager.param.playFrame;
 		childNum=groupSize-surviveNum;
 		mainScene = SceneManager.GetSceneByName ("GameMain");
+
 		players = GeneManager.players;
 		geneCalc ();
 		for (int i = 0; i < surviveNum; i++) {
@@ -45,6 +46,7 @@ public class GeneCalcController : MonoBehaviour {
         Debug.Log("gene clac completed!");
         SceneManager.LoadScene("SakeruCheese");
     }
+
 
 	// Update is called once per frame
 	void Update () {
