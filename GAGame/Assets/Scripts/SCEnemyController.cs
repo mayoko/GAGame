@@ -8,4 +8,12 @@ public class SCEnemyController : MonoBehaviour {
 	void Update () {
 		transform.Translate (-1 * 0.0165f * enemySpeed * enemyDirection, 0, 0);
 	}
+
+	void OnTriggerEnter (Collider hit)
+	{
+		if (hit.CompareTag ("EnemyWall"))
+		{
+			Destroy (gameObject);
+		}
+	}
 }
