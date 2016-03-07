@@ -7,7 +7,8 @@ public class GeneManager : MonoBehaviour {
     {
         // 個体数
         public int playerNum;
-        // プレイ時間(フレーム数)
+        // 変数名はへんだがそう読み替えることになった #声に出して読みたい日本語
+        // 遺伝子の長さです
         public int playFrame;
         // 突然変異率
         public float mutationRate;

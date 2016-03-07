@@ -22,6 +22,6 @@ public class guiSceneScript3 : MonoBehaviour {
 
 	public void OnsliderChanged ()
 	{
-		text.text = "フレーム数 = " + slider.value;
+		text.text = "フレーム数 = " + (5*slider.value);
 	}
 }
