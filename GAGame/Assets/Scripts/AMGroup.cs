@@ -36,7 +36,7 @@ public class AMGroup : MonoBehaviour {
 			// 各オブジェクトを目標位置に動かす
 			for (int i = 0; i < geneSize; i++)
 			{
-				gameObjects[i].GetComponent<AMElement>().move(to + i * (new Vector3(2, 0, 0)), t);
+				gameObjects[i].GetComponent<AMElement>().moveWith(to + i * (new Vector3(2, 0, 0)), t);
 			}
 			// 目的地にいけてるなら終了フラグを立てる
 			if (gameObjects [0].GetComponent<AMElement> ().progress == 1) {
@@ -46,6 +46,25 @@ public class AMGroup : MonoBehaviour {
 				yield break;
 			}
 			yield return new WaitForSeconds(interval);
+		}
+	}
+	// 配列で指定されたオブジェクトを t 秒間点滅させる
+	public IEnumerator blink(int[] v, float t) {
+		if (v == null)
+			yield break;
+		while (true) {
+			for (int i = 0; i < v.Length; i++) {
+				gameObjects [v [i]].GetComponent<AMElement> ().blinkWith (t);
+			}
+			// 点滅が終了したら終了フラグを立てる
+			if (gameObjects [v [0]].GetComponent<AMElement> ().progress == 1) {
+				for (int i = 0; i < v.Length; i++) {
+					gameObjects [v [i]].GetComponent<AMElement> ().progress = 0;
+				}
+				Debug.Log ("finish!");
+				yield break;
+			}
+			yield return new WaitForSeconds (10 * interval);
 		}
 	}
 	// Update is called once per frame
