@@ -13,8 +13,12 @@ public class AMTestAnimation : MonoBehaviour {
 		StartCoroutine ("Sample");
 	}
 	private IEnumerator Sample() {
+		// 単体オブジェクトを点滅させる
+		yield return StartCoroutine(element.GetComponent<AMElement>().blink(1f));
+		// 2 個のオブジェクトを同時に点滅させる
+		yield return StartCoroutine(group.GetComponent<AMGroup>().blink(new int[] {0,1}, 1f));
 		// 単体オブジェクトを動かす
-		yield return StartCoroutine (element.GetComponent<AMElement> ().moveWith (new Vector3 (1, 1, 1), 1f));
+		yield return StartCoroutine (element.GetComponent<AMElement> ().move (new Vector3 (1, 1, 1), 1f));
 		// オブジェクトをまとめて二段階に分けて動かす
 		// 一段階目
 		yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 1, 1), 1f));
