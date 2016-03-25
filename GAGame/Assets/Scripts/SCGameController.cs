@@ -13,13 +13,10 @@ public class SCGameController : MonoBehaviour {
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
 
-	public GameObject sakeruEnemySphere;
-	public GameObject sakeruEnemyCube;
-
-	GameObject sakeruEnemyObject;
+	public GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern;
 	public float[][] enemyInfo; 
-	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(生成フレーム,生成位置,速度,形,サイズ,方向)
+	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(縦の長さ,横の長さ,出現位置,速度,時間)
 	public int enemyNum = 0; //次のEnemyが何番目かを保持.0から
 	private int enemyFrame = 99999999; //次のEnemyが出現するフレームを保持
 	private int enemyPop; //Enemyの数
@@ -64,7 +61,7 @@ public class SCGameController : MonoBehaviour {
 
 		//EnemyのPatternの外部ファイルからの読み出し
 		ReadEnemyPattern ();
-		enemyFrame = (int)enemyInfo [0] [0]; //最初に生成するEnemyのFrameを保持
+		enemyFrame = (int)enemyInfo [0] [4]; //最初に生成するEnemyのFrameを保持
     }
 
     void Update()
@@ -79,27 +76,8 @@ public class SCGameController : MonoBehaviour {
         // ゲーム終了処理
         if (alive == 0) finishGame();
 
-		//Enemy生成処理
-		if (getCurrentFrame() >= enemyFrame) {
-			if (enemyInfo [enemyNum] [3] == 0) {
-				sakeruEnemyObject = sakeruEnemySphere;
-			} else {
-				sakeruEnemyObject = sakeruEnemyCube;
-			}
-			GameObject enemy = Instantiate (sakeruEnemyObject,
-											new Vector3 (-3+9*enemyInfo [enemyNum] [5], 0, enemyInfo [enemyNum] [1]),
-											Quaternion.identity) as GameObject;
-			SCEnemyController scec = enemy.GetComponent<SCEnemyController> ();
-			scec.enemySpeed = enemyInfo [enemyNum] [2];
-			scec.enemyDirection = enemyInfo [enemyNum] [5];
-			scec.transform.localScale = new Vector3 (enemyInfo [enemyNum] [4], enemyInfo [enemyNum] [4], enemyInfo [enemyNum] [4]);
-			enemyNum++;
-			if (enemyNum < enemyPop) {
-				enemyFrame = (int)enemyInfo[enemyNum][0];
-			} else {
-				enemyFrame = 99999999; //これ以上Enemyを生成しない
-			}
-		}
+        //Enemy生成処理
+        if (getCurrentFrame() >= enemyFrame) EnemyAppear();
     }
 
     void finishGame()
@@ -131,10 +109,9 @@ public class SCGameController : MonoBehaviour {
         return finalFrame + 1;
     }
 
-	//Enemyのデータを外部ファイルから読みだす
-	void ReadEnemyPattern(){
-		// ExternalFileフォルダ内のEnemyPattern.txtファイルを読み込む
-		string[] patternInfo = enemyPattern.text.Split("\n"[0]);
+    //Enemyのデータを外部ファイルから読みだす
+    void ReadEnemyPattern(){
+        string[] patternInfo = enemyPattern.text.Split("\n"[0]);
 		enemyPop = patternInfo.Length;
 		enemyInfo = new float[enemyPop][];
 
@@ -143,9 +120,30 @@ public class SCGameController : MonoBehaviour {
 			eachInfo = patternInfo [i].Split (","[0]);
 			enemyInfo [i] = new float[] { Single.Parse (eachInfo [0]), Single.Parse (eachInfo [1]),
 										  Single.Parse (eachInfo [2]), Single.Parse (eachInfo [3]),
-										  Single.Parse (eachInfo [4]), Single.Parse (eachInfo [5])}; 
+										  Single.Parse (eachInfo [4]) }; 
 		}
 	}
+
+    //enemyInfoは[n]がn番目の敵の情報の配列.敵の情報は(縦の長さ,横の長さ,出現位置,速度,時間)    
+    void EnemyAppear()
+    {
+        float enemyX;
+        if (enemyInfo[enemyNum][3] > 0) enemyX = 11.0f;
+        else enemyX = -11.0f;
+
+        GameObject enemy = Instantiate(sakeruEnemyObject,
+                                            new Vector3(enemyX, 0.0f, enemyInfo[enemyNum][2]),
+                                            Quaternion.identity) as GameObject;
+        SCEnemyController scec = enemy.GetComponent<SCEnemyController>();
+        scec.enemySpeed = enemyInfo[enemyNum][3];
+        scec.transform.localScale = new Vector3(enemyInfo[enemyNum][1], 1.0f, enemyInfo[enemyNum][0]);
+        enemyNum++;
+        if (enemyNum < enemyPop) {
+            enemyFrame = (int)enemyInfo[enemyNum][4];
+        } else {
+            enemyFrame = 99999999; //これ以上Enemyを生成しない
+        }
+    }
 }
 
 
