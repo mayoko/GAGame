@@ -17,7 +17,7 @@ public class SCPlayerController : MonoBehaviour {
         gc = GameObject.Find("GameController").GetComponent<SCGameController>();
     }
 
-    void Update() {
+    void FixedUpdate() {
         int cf = gc.getCurrentFrame();
         int cg = cf / gc.fpg; // currentGene
         int cgr = cf % gc.fpg; // currentGeneRemainder (雑な命名)
