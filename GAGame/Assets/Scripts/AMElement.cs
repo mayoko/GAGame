@@ -24,6 +24,11 @@ public class AMElement : MonoBehaviour
     // AMGroup に動くのを任せる場合は move を使う
     public IEnumerator move(Vector3 to, float t)
     {
+        if (t == 0)
+        {
+            transform.position = to;
+            yield break;
+        }
         // 動きが終わるまでは while から抜けないこと
         while (true)
         {
@@ -78,6 +83,12 @@ public class AMElement : MonoBehaviour
     // 速度調整するときは t を調整すれば良い
     public void moveWith(Vector3 to, float t)
     {
+        if (t == 0)
+        {
+            progress = 1;
+            transform.position = to;
+            return;
+        }
         // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
         if (progress == 0)
         {

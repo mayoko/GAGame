@@ -26,7 +26,7 @@ public class AMTestAnimation : MonoBehaviour
         // 一段階目
         yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 1, 1), 1f));
         // 二段階目
-        yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 3, 1), 1f / 5));
+        yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 3, 1), 0f));
     }
     // Update is called once per frame
     void Update()
