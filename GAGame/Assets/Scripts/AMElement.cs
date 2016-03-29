@@ -10,6 +10,8 @@ public class AMElement : MonoBehaviour
     public int progress;
     // move が呼ばれるたびに動くベクトル
     private Vector3 dr;
+    // setColor が呼ばれるたびに動く Color
+    private Color dc;
     // 点滅時間を管理するための変数
     private float blinkElapsed;
 
@@ -104,6 +106,31 @@ public class AMElement : MonoBehaviour
         {
             progress = 1;
         }
+    }
+    public IEnumerator setColor(Color color, float t)
+    {
+        if (t == 0)
+        {
+            setColorWith(color);
+            yield break;
+        }
+        if (progress == 0)
+        {
+            dc = color - GetComponent<Renderer>().material.color;
+            dc *= interval / t;
+        }
+        GetComponent<Renderer>().material.color += dc;
+        // 十分近い色になってたら終了フラグを立てる
+        Color diff = GetComponent<Renderer>().material.color - color;
+        float d = color.r + color.g + color.b;
+        if (d < 0.001)
+        {
+            progress = 1;
+        }
+    }
+    public void setColorWith(Color color)
+    {
+        GetComponent<Renderer>().material.color = color;
     }
 
     // Use this for initialization

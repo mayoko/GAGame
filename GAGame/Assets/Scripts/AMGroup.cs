@@ -96,6 +96,17 @@ public class AMGroup : MonoBehaviour {
             }
         }
     }
+    // スコアが与えられるので, それっぽい色に変更する
+    public void setScore(float score)
+    {
+        face.GetComponent<Renderer>().material.color = new Color(min(score / 50, 1f), 0f, 0f, 1f);
+    }
+
+    private float min(float p1, float p2)
+    {
+        if (p1 < p2) return p1;
+        return p2;
+    }
 
     // Update is called once per frame
     void Update () {
