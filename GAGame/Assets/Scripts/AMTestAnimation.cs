@@ -20,6 +20,7 @@ public class AMTestAnimation : MonoBehaviour
         yield return StartCoroutine(element.GetComponent<AMElement>().blink(1f));
         // 2 個のオブジェクトを同時に点滅させる
         yield return StartCoroutine(group.GetComponent<AMGroup>().blink(new int[] { 0, 1 }, 1f));
+        group.GetComponent<AMGroup>().setColor(new int[] { -1, 0, 1 });
         // 単体オブジェクトを動かす
         yield return StartCoroutine(element.GetComponent<AMElement>().move(new Vector3(1, 1, 1), 1f));
         // オブジェクトをまとめて二段階に分けて動かす

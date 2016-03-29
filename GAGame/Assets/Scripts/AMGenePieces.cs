@@ -77,6 +77,25 @@ public class AMGenePieces : MonoBehaviour
             yield return new WaitForSeconds(10 * interval);
         }
     }
+    // 配列を与えられるので, genes の色を変更する
+    public void setColor(int[] v)
+    {
+        for (int i = 0; i < v.Length; i++)
+        {
+            switch (v[i])
+            {
+                case -1:
+                    gameObjects[i].GetComponent<Renderer>().material.color = Color.red;
+                    break;
+                case 0:
+                    gameObjects[i].GetComponent<Renderer>().material.color = Color.green;
+                    break;
+                case 1:
+                    gameObjects[i].GetComponent<Renderer>().material.color = Color.blue;
+                    break;
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
