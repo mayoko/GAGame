@@ -13,6 +13,8 @@ public class SCGameController : MonoBehaviour {
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     private int firstFrame; // frame数計測用
 
+    int testFrame; //加速したりしてもスコアをカウントできるように
+
 	public GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern;
 	public float[][] enemyInfo; 
@@ -28,6 +30,8 @@ public class SCGameController : MonoBehaviour {
         geneSize = GeneManager.param.playFrame; // 変数名はへんだがそう読み替えることになった
         firstFrame = Time.frameCount;
         finalFrame = fpg*geneSize-1;
+
+        testFrame = 0;
 
         // Player周り
         for (int i=0; i<GeneManager.players.Length; i++)
@@ -76,8 +80,22 @@ public class SCGameController : MonoBehaviour {
         // ゲーム終了処理
         if (alive == 0) finishGame();
 
+        //高速再生処理
+        if (Input.GetKey("space"))
+        {
+            Time.timeScale = 4;
+        }
+        else {
+            Time.timeScale = 1;
+        }
+    }
+
+    void FixedUpdate()
+    {
         //Enemy生成処理
         if (getCurrentFrame() >= enemyFrame) EnemyAppear();
+
+        testFrame++;
     }
 
     void finishGame()
@@ -96,7 +114,8 @@ public class SCGameController : MonoBehaviour {
     // 現在のframe番号を自分で数えると他のオブジェクトとの実行順が気になるのでUnityに頼る
     public int getCurrentFrame()
     {
-        return Time.frameCount - firstFrame; // 0はじまり
+        //return Time.frameCount - firstFrame; // 0はじまり
+        return testFrame;
     }
 
     // 今後の拡張性を考えて大げさにscore取得関数
@@ -145,5 +164,3 @@ public class SCGameController : MonoBehaviour {
         }
     }
 }
-
-
