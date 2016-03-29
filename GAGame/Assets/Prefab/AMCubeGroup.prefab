@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8436607d01424b8478da5b038ce1c4bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  facePrefab: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
   prefab: {fileID: 157786, guid: 8c4a5b8f0119d924fa319894a7e6a60b, type: 2}
   interval: 0
   geneSize: 0
@@ -48,7 +49,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: facePrefab
+      value: 
+      objectReference: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 184512}
