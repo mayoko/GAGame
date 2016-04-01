@@ -36,7 +36,7 @@ public class AMGenePieces : MonoBehaviour
         gameObjects = new GameObject[geneSize];
         for (int i = 0; i < geneSize; i++)
         {
-            gameObjects[i] = Instantiate(prefab, pos + new Vector3(cubeSize * i, 0, i), Quaternion.identity) as GameObject;
+            gameObjects[i] = Instantiate(prefab, pos + new Vector3(cubeSize * i, 0, 0), Quaternion.identity) as GameObject;
         }
     }
 
