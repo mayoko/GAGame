@@ -7,6 +7,8 @@ public class AMGroup : MonoBehaviour {
     private GameObject face;
     // face の prefab
     public GameObject facePrefab;
+    // genePieces の prefab
+    public GameObject genePrefab;
     // オブジェクトをまとめておくための配列
     private GameObject[] genes;
     // genes の prefab
@@ -100,6 +102,14 @@ public class AMGroup : MonoBehaviour {
     public void setScore(float score)
     {
         face.GetComponent<Renderer>().material.color = new Color(min(score / 50, 1f), 0f, 0f, 1f);
+    }
+    // 区間が与えられるので, その部分の gene の集合を AMGenePieces として返す
+    // [l, r] 区間にしています
+    public GameObject getSegment(int l, int r)
+    {
+        GameObject genePieces = Instantiate(genePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        genePieces.GetComponent<AMGenePieces>().setParams(r-l+1, genes[l].transform.position);
+        return genePieces;
     }
 
     private float min(float p1, float p2)

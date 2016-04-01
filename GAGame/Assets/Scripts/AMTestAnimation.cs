@@ -30,6 +30,9 @@ public class AMTestAnimation : MonoBehaviour
         yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 1, 1), 1f));
         // 二段階目
         yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 3, 1), 0f));
+        // group から一部切り取る
+        GameObject go = group.GetComponent<AMGroup>().getSegment(0, 3);
+        yield return StartCoroutine(go.GetComponent<AMGenePieces>().move(new Vector3(-1, -1, -1), 1f));
     }
     // Update is called once per frame
     void Update()

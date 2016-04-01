@@ -19,13 +19,24 @@ public class AMGenePieces : MonoBehaviour
     void Awake()
     {
         interval = 0.01f;
-        geneSize = 100;
+        geneSize = 0;
         gameObjects = new GameObject[geneSize];
         for (int i = 0; i < geneSize; i++)
         {
             // 指定した座標にオブジェクトを作る
             // (ここでは等間隔に並べている)
             gameObjects[i] = Instantiate(prefab, new Vector3(cubeSize * i, 0, 0), Quaternion.identity) as GameObject;
+        }
+    }
+    // パラメーターを調整する
+    // gene の長さと 場所を指定する
+    public void setParams(int size, Vector3 pos)
+    {
+        geneSize = size;
+        gameObjects = new GameObject[geneSize];
+        for (int i = 0; i < geneSize; i++)
+        {
+            gameObjects[i] = Instantiate(prefab, pos + new Vector3(cubeSize * i, 0, i), Quaternion.identity) as GameObject;
         }
     }
 

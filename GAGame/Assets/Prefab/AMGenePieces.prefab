@@ -1,46 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &184512
+--- !u!1 &174552
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 454040}
-  - 114: {fileID: 11441580}
+  - 4: {fileID: 469348}
+  - 114: {fileID: 11454000}
   m_Layer: 0
-  m_Name: AMCubeGroup
+  m_Name: AMGenePieces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &454040
+--- !u!4 &469348
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184512}
+  m_GameObject: {fileID: 174552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 180.5, y: 135.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11441580
+--- !u!114 &11454000
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 184512}
+  m_GameObject: {fileID: 174552}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8436607d01424b8478da5b038ce1c4bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f320720613cee94ba3f9597d1a4e31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facePrefab: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
-  genePrefab: {fileID: 174552, guid: e05d42970122fd243b9da41fd659d985, type: 2}
   prefab: {fileID: 157786, guid: 8c4a5b8f0119d924fa319894a7e6a60b, type: 2}
   interval: 0
   geneSize: 0
@@ -50,12 +48,8 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: facePrefab
-      value: 
-      objectReference: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 184512}
+  m_RootGameObject: {fileID: 174552}
   m_IsPrefabParent: 1
