@@ -28,6 +28,16 @@ public class AMGenePieces : MonoBehaviour
             gameObjects[i] = Instantiate(prefab, new Vector3(cubeSize * i, 0, 0), Quaternion.identity) as GameObject;
         }
     }
+    // 先頭の遺伝子がある場所を返す
+    public Vector3 pos()
+    {
+        return gameObjects[0].transform.position;
+    }
+    // 要素を全消しする
+    public void delete()
+    {
+        for (int i = 0; i < geneSize; i++) Destroy(gameObjects[i]);
+    }
     // パラメーターを調整する
     // gene の長さと 場所を指定する
     public void setParams(int size, Vector3 pos)
@@ -106,6 +116,11 @@ public class AMGenePieces : MonoBehaviour
                     break;
             }
         }
+    }
+    public void setAlpha(float alpha)
+    {
+        int sz = gameObjects.Length;
+        for (int i = 0; i < sz; i++) gameObjects[i].GetComponent<AMElement>().setAlpha(alpha);
     }
     // Update is called once per frame
     void Update()

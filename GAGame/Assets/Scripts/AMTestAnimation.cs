@@ -4,7 +4,7 @@ using System.Collections;
 // アニメーションのサンプル
 public class AMTestAnimation : MonoBehaviour
 {
-    public GameObject group, element;
+    public GameObject group, element, kao;
     // Use this for initialization
     void Start()
     {
@@ -33,6 +33,37 @@ public class AMTestAnimation : MonoBehaviour
         // group から一部切り取る
         GameObject go = group.GetComponent<AMGroup>().getSegment(0, 3);
         yield return StartCoroutine(go.GetComponent<AMGenePieces>().move(new Vector3(-1, -1, -1), 1f));
+        GameObject face = Instantiate(kao, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        GameObject[] gogo = { go };
+        yield return StartCoroutine(fadeOut(face, gogo));
+    }
+    // 交差専用
+    // 同時に複数の GenePieces と頭を自然消滅させる
+    private IEnumerator fadeOut(GameObject face, GameObject[] gps)
+    {
+        float fadeTime = 1f;
+        float currentRemainTime = fadeTime;
+        float interval = 0.01f;
+        int sz = gps.Length;
+        while (true)
+        {
+            currentRemainTime -= interval;
+            Debug.Log(currentRemainTime);
+            if (currentRemainTime <= 0f)
+            {
+                Destroy(face);
+                for (int i = 0; i < sz; i++)
+                {
+                    gps[i].GetComponent<AMGenePieces>().delete();
+                    Destroy(gps[i]);
+                }
+                yield break;
+            }
+            float alpha = currentRemainTime / fadeTime;
+            face.GetComponent<AMElement>().setAlpha(alpha);
+            for (int i = 0; i < sz; i++) gps[i].GetComponent<AMGenePieces>().setAlpha(alpha);
+            yield return new WaitForSeconds(interval);
+        }
     }
     // Update is called once per frame
     void Update()

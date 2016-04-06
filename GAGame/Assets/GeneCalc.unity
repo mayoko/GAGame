@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   group: {fileID: 184512, guid: e6153e9d5b1ff0c449279b9274b2fd5f, type: 2}
   element: {fileID: 157786, guid: 8c4a5b8f0119d924fa319894a7e6a60b, type: 2}
+  kao: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
 --- !u!4 &1656868451
 Transform:
   m_ObjectHideFlags: 0

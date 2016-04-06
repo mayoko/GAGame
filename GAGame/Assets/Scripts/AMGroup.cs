@@ -35,7 +35,11 @@ public class AMGroup : MonoBehaviour {
             genes[i] = Instantiate(prefab, new Vector3(cubeSize*i+(cubeSize+2), 0, 0), Quaternion.identity) as GameObject;
         }
     }
-
+    // 頭のゲームオブジェクトを返す
+    public GameObject getFace()
+    {
+        return face;
+    }
     // to に向かって今の位置から t 秒で進む
     // 速度調整するときは t を調整すれば良い
     public IEnumerator move(Vector3 to, float t)
@@ -103,12 +107,30 @@ public class AMGroup : MonoBehaviour {
     {
         face.GetComponent<Renderer>().material.color = new Color(min(score / 50, 1f), 0f, 0f, 1f);
     }
+    public void moveWith(Vector3 to, float t)
+    {
+        // 各オブジェクトを目標位置に動かす
+        face.GetComponent<AMElement>().moveWith(to, t);
+        for (int i = 0; i < geneSize; i++)
+        {
+            genes[i].GetComponent<AMElement>().moveWith(to + new Vector3(cubeSize * i + (cubeSize + 2), 0, 0), t);
+        }
+        // 目的地にいけてるなら終了フラグを立てる
+        if (genes[0].GetComponent<AMElement>().progress == 1)
+        {
+            face.GetComponent<AMElement>().progress = 0;
+            for (int i = 0; i < geneSize; i++)
+                genes[i].GetComponent<AMElement>().progress = 0;
+            Debug.Log("finish!");
+        }
+    }
     // 区間が与えられるので, その部分の gene の集合を AMGenePieces として返す
     // [l, r] 区間にしています
     public GameObject getSegment(int l, int r)
     {
         GameObject genePieces = Instantiate(genePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        genePieces.GetComponent<AMGenePieces>().setParams(r-l+1, genes[l].transform.position);
+        genePieces.GetComponent<AMGenePieces>().setParams(r - l + 1, genes[l].transform.position);
+        int[] vs = new int[r - l + 1];
         return genePieces;
     }
 
@@ -119,11 +141,13 @@ public class AMGroup : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
     }
 }
