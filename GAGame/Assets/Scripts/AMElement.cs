@@ -14,12 +14,23 @@ public class AMElement : MonoBehaviour
     private Color dc;
     // 点滅時間を管理するための変数
     private float blinkElapsed;
+    private Renderer renderer;
 
     void Awake()
     {
         interval = 0.01f;
         progress = 0;
+        renderer = GetComponent<Renderer>();
+        renderer.material.SetFloat("_Mode", 3);
+        renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        renderer.material.SetInt("_ZWrite", 0);
+        renderer.material.DisableKeyword("_ALPHATEST_ON");
+        renderer.material.DisableKeyword("_ALPHABLEND_ON");
+        renderer.material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        renderer.material.renderQueue = 3000;
     }
+
     // to に向かって今の位置から t 秒で進む
     // 速度調整するときは t を調整すれば良い
     // 単体で動かす場合はこちらを使う
@@ -127,6 +138,12 @@ public class AMElement : MonoBehaviour
         {
             progress = 1;
         }
+    }
+    public void setAlpha(float alpha)
+    {
+        var color = renderer.material.color;
+        color.a = alpha;
+        renderer.material.SetColor("_Color", color);
     }
     public void setColorWith(Color color)
     {
