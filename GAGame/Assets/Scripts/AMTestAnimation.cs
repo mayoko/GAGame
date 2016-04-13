@@ -4,6 +4,7 @@ using System.Collections;
 // アニメーションのサンプル
 public class AMTestAnimation : MonoBehaviour {
 	public GameObject group, element;
+
 	// Use this for initialization
 	void Start () {
 		// まず Instantiate 関数でオブジェクトを作る
