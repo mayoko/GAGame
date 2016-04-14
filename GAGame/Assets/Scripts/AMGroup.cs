@@ -2,6 +2,13 @@
 using System.Collections;
 
 // アニメーションでいくつかのオブジェクトをまとめて動かすためのクラス
+// how to use
+// getFace() は顔(球オブジェクト)を返す
+// move(目標位置, 時間) で目標位置まで指定した時間で移動する
+// blink(点滅するオブジェクトの集合を示す配列, 時間) で指定したオブジェクトを指定した時間点滅させる
+// setColor(各時間にどう動くかを示す配列) で遺伝子に色付けをする 
+// getScore(スコア) でスコアが高いやつほど顔の色を濃くする
+// getSegment(左端, 右端) で [l, r] 区間にある遺伝子配列を返す
 public class AMGroup : MonoBehaviour {
     // 先頭にある顔オブジェクトの prefab (1種類のみ)
     private GameObject face;
