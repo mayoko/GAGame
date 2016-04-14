@@ -2,6 +2,7 @@
 using System.Collections;
 
 // アニメーションのサンプル
+// fadeOut は複数の genePiece を同時に透明にしていって最後に消す関数
 public class AMTestAnimation : MonoBehaviour
 {
     public GameObject group, element, kao;
