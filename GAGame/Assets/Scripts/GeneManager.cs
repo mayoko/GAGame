@@ -14,6 +14,15 @@ public class GeneManager : MonoBehaviour {
         public float mutationRate;
     }
     public static Param param = new Param();
+    // AnimationとかSakeruCheeseとかにまたがるビューのパラメータをまとめたクラス
+    public class ViewParam
+    {
+        // 再生速度
+        public float playSpeed = 1.0f;
+        // スキップモード
+        public bool isSkipping = false;
+    }
+    public static ViewParam viewParam = new ViewParam();
     // player に関する情報をまとめたクラス
     public class Player
     {
