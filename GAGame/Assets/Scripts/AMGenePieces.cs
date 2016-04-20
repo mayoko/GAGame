@@ -1,6 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// 遺伝子のいくつかの集合をまとめるクラス
+// 多分交差関連でしか使わないと思います
+// 交差関連での使用方法は AMTestAnimation に書いてあるから見てね
+// how to use
+// AMGroup のオブジェクトで getSegment(l, r) を呼ぶとそのオブジェクトの [l, r] 区間の遺伝子が Instantiate される
+// pos() で先頭遺伝子の位置を返す
+// delete() で遺伝子を全部消す
+// setParams(遺伝子の数, 場所) で指定した遺伝子の数だけ立方体が並んだオブジェクトが指定した場所に現れる
+// move(目標位置, 時間) で目標位置まで指定した時間で移動する
+// blink(点滅するオブジェクトの集合を示す配列, 時間) で指定したオブジェクトを指定した時間点滅させる
+// setColor(各時間にどう動くかを示す配列) で遺伝子に色付けをする 
+// setAlpha(alpha 値) で透明度を設定する
 public class AMGenePieces : MonoBehaviour
 {
     // まとめて動かす対象のオブジェクト(1種類のみ)

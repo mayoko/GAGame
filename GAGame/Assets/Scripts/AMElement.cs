@@ -2,6 +2,13 @@
 using System.Collections;
 
 // アニメーションでひとつのオブジェクトを動かすためのクラス
+// how to use
+// Instantiate してオブジェクトを生成
+// move(目標位置, 到着するまでの時間) で目標位置まで移動
+// blink(時間) で指定した時間点滅
+// setColorWith(色) で色を指定
+// setColor(色, 時間) で徐々に色が変わっていくかもしれない
+// setAlpha(alpha 値) で透明度を変化させる
 public class AMElement : MonoBehaviour
 {
     // オブジェクトを動かす周期
