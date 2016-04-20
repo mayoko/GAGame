@@ -67,7 +67,7 @@ public class AMTestAnimation : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
     }
-    private void skip()
+    public void Skip()
     {
         SceneManager.LoadScene("SakeruCheese");
     }
@@ -76,7 +76,7 @@ public class AMTestAnimation : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            skip();
+            Skip();
         }
     }
 }
