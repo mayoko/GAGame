@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class AMTestAnimation : MonoBehaviour
 {
     public GameObject group, element, kao;
+    GeneManager.ViewParam vp = GeneManager.viewParam;
     // Use this for initialization
     void Start()
     {
@@ -19,22 +20,22 @@ public class AMTestAnimation : MonoBehaviour
     private IEnumerator Sample()
     {
         // 単体オブジェクトを点滅させる
-        yield return StartCoroutine(element.GetComponent<AMElement>().blink(1f));
+        yield return StartCoroutine(element.GetComponent<AMElement>().blink(1f/vp.playSpeed));
         // 2 個のオブジェクトを同時に点滅させる
-        group.GetComponent<AMGroup>().setScore(30f);
-        yield return StartCoroutine(group.GetComponent<AMGroup>().blink(new int[] { 0, 1 }, 1f));
+        group.GetComponent<AMGroup>().setScore(30f/vp.playSpeed);
+        yield return StartCoroutine(group.GetComponent<AMGroup>().blink(new int[] { 0, 1 }, 1f/vp.playSpeed));
         group.GetComponent<AMGroup>().setColor(new int[] { -1, 0, 1 });
         // 単体オブジェクトを動かす
-        yield return StartCoroutine(element.GetComponent<AMElement>().move(new Vector3(1, 1, 1), 1f));
+        yield return StartCoroutine(element.GetComponent<AMElement>().move(new Vector3(1, 1, 1), 1f/vp.playSpeed));
         group.GetComponent<AMGroup>().setScore(0f);
         // オブジェクトをまとめて二段階に分けて動かす
         // 一段階目
-        yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 1, 1), 1f));
+        yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 1, 1), 1f/vp.playSpeed));
         // 二段階目
         yield return StartCoroutine(group.GetComponent<AMGroup>().move(new Vector3(1, 3, 1), 0f));
         // group から一部切り取る
         GameObject go = group.GetComponent<AMGroup>().getSegment(0, 3);
-        yield return StartCoroutine(go.GetComponent<AMGenePieces>().move(new Vector3(-1, -1, -1), 1f));
+        yield return StartCoroutine(go.GetComponent<AMGenePieces>().move(new Vector3(-1, -1, -1), 1f/vp.playSpeed));
         GameObject face = Instantiate(kao, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         GameObject[] gogo = { go };
         yield return StartCoroutine(fadeOut(face, gogo));
@@ -43,7 +44,7 @@ public class AMTestAnimation : MonoBehaviour
     // 同時に複数の GenePieces と頭を自然消滅させる
     private IEnumerator fadeOut(GameObject face, GameObject[] gps)
     {
-        float fadeTime = 1f;
+        float fadeTime = 1f/vp.playSpeed;
         float currentRemainTime = fadeTime;
         float interval = 0.01f;
         int sz = gps.Length;
