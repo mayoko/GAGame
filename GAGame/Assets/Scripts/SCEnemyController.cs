@@ -3,13 +3,13 @@ using System.Collections;
 
 public class SCEnemyController : MonoBehaviour {
 	public float enemySpeed;
-	public float enemyDirection;
+    
+    void FixedUpdate()
+    {
+        transform.Translate(-1 * 0.0165f * enemySpeed, 0, 0);
+    }
 
-	void Update () {
-		transform.Translate (-1 * 0.0165f * enemySpeed * enemyDirection, 0, 0);
-	}
-
-	void OnTriggerEnter (Collider hit)
+    void OnTriggerEnter (Collider hit)
 	{
 		if (hit.CompareTag ("EnemyWall"))
 		{
