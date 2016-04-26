@@ -81,13 +81,15 @@ public class SCGameController : MonoBehaviour {
         if (alive == 0) finishGame();
 
         //高速再生処理
-        if (Input.GetKey("space"))
-        {
-            Time.timeScale = 4;
-        }
-        else {
-            Time.timeScale = 1;
-        }
+        //if (Input.GetKey("space"))
+        //{
+        //    Time.timeScale = 4;
+        //}
+        //else {
+        //    Time.timeScale = 1;
+        //}
+        Time.timeScale = GeneManager.viewParam.playSpeed;
+        if (Input.GetKey("space")) Time.timeScale *= 4;
     }
 
     void FixedUpdate()
@@ -102,12 +104,12 @@ public class SCGameController : MonoBehaviour {
     {
         // Scoreの更新はひとまず止めなくていいや
         // 高速実行の際は即終了するようなオプションをParamにつけてもらいたい予定
-        if (true)
+        if (!GeneManager.viewParam.isSkipping)
         {
             sakeruButtonObject.SetActive(true);
         } else
         {
-            // SceneManager.LoadScene("GeneCalc");
+            SceneManager.LoadScene("GeneCalc");
         }
     }
 
