@@ -6,6 +6,7 @@ using System; //Split,Single.Parse
 public class SCGameController : MonoBehaviour {
     public UnityEngine.UI.Text scoreLabel;
     public UnityEngine.UI.Text aliveLabel;
+    public UnityEngine.UI.Text generationLabel;
     public GameObject sakeruButtonObject;
     public SCPlayerController playerPrefab;
     public int geneSize;
@@ -27,6 +28,7 @@ public class SCGameController : MonoBehaviour {
     void Start()
     {
         // インフラ周り
+        GeneManager.viewParam.generation++; // ここに書くべきではない
         geneSize = GeneManager.param.playFrame; // 変数名はへんだがそう読み替えることになった
         firstFrame = Time.frameCount;
         finalFrame = fpg*geneSize-1;
@@ -76,18 +78,21 @@ public class SCGameController : MonoBehaviour {
         // UI表示
         scoreLabel.text = "Score: " + getScore().ToString() + " / " + getMaxScore().ToString();
         aliveLabel.text = "Alive: " + alive.ToString();
+        generationLabel.text = "第" + GeneManager.viewParam.generation.ToString() + "世代";
 
         // ゲーム終了処理
         if (alive == 0) finishGame();
 
         //高速再生処理
-        if (Input.GetKey("space"))
-        {
-            Time.timeScale = 4;
-        }
-        else {
-            Time.timeScale = 1;
-        }
+        //if (Input.GetKey("space"))
+        //{
+        //    Time.timeScale = 4;
+        //}
+        //else {
+        //    Time.timeScale = 1;
+        //}
+        Time.timeScale = GeneManager.viewParam.playSpeed;
+        if (Input.GetKey("space")) Time.timeScale *= 4;
     }
 
     void FixedUpdate()
@@ -102,12 +107,12 @@ public class SCGameController : MonoBehaviour {
     {
         // Scoreの更新はひとまず止めなくていいや
         // 高速実行の際は即終了するようなオプションをParamにつけてもらいたい予定
-        if (true)
+        if (!GeneManager.viewParam.isSkipping)
         {
             sakeruButtonObject.SetActive(true);
         } else
         {
-            // SceneManager.LoadScene("GeneCalc");
+            SceneManager.LoadScene("GeneCalc");
         }
     }
 
