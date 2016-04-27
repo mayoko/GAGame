@@ -16,9 +16,12 @@ public class AManimation : MonoBehaviour {
 	int[] fatherarray;
 	int[] motherarray;
 
-	object father;
-	object mother;
-	object child;
+	object[] father;
+	object[] mother;
+	object[] child;
+
+	//交叉ポイント
+	int r
 
 	void Start () {
 		//親の遺伝子集団の作成(並べるだけ)
@@ -51,5 +54,13 @@ public class AManimation : MonoBehaviour {
 			mother = generationgenes [motherarray [i]];
 			yield return StartCoroutine (father.GetComponent<AMGroup> ().move (new Vector3 (-45, 0, 0), 1f));
 			yield return StartCoroutine (mother.GetComponent<AMGroup> ().move (new Vector3 (-15, 0, 0), 1f));
+			GameObject go1 = father.GetComponent<AMGroup> ().getSegment (0, r);
+			GameObject go2 = mother.GetComponent<AMgroup> ().getSegment (r, 30 - 1);
+			yield return StartCoroutine (go1.GetComponent<AMGroup> ().move (new Vector3 (-30, 0, 0), 1f));
+			yield return StartCoroutine (go2.GetComponent<AMGroup> ().move (new Vector3 (-30, 7 + r * 10, 0), 1f));
+			yield return StartCoroutine (father.GetComponent<AMGroup> ().delete ());
+			yield return StartCoroutine (mother.GetComponent<AMGroup> ().delete ());
+			yield return StartCoroutine (go1.GetComponent<AMGroup> ().delete ());
+			yield return StartCoroutine (go2.GetComponent<AMGroup> ().delete ());
 		}
 	}
