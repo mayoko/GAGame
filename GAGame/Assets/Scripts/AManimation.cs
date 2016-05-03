@@ -39,7 +39,7 @@ public class AManimation : MonoBehaviour {
 				geneobject [k] = Instantiate (element, new Vector3 ((i-25)*15, 327+ k*10, 0), Quaternion.identity) as GameObject;
 			}
 			generationgenes [i] = geneobject;
-			scoreobject [i].GetComponent<AMGenePieces> ().setScore (score[i]);
+			scoreobject [i].GetComponent<AMGroup> ().setScore (score [i]);
 			geneobject [i].GetComponent<AMGenePieces> ().setColor (colorarray [i]);
 		}
 		//交叉の開始
@@ -53,16 +53,16 @@ public class AManimation : MonoBehaviour {
 		for (int i = 0; i < 50; i++) {
 			father = generationgenes [fatherarray [i]];
 			mother = generationgenes [motherarray [i]];
-			yield return StartCoroutine (father.GetComponent<AMGroup> ().move (new Vector3 (-45, 0, 0), 1f));
-			yield return StartCoroutine (mother.GetComponent<AMGroup> ().move (new Vector3 (-15, 0, 0), 1f));
-			GameObject go1 = father.GetComponent<AMGroup> ().getSegment (0, r);
-			GameObject go2 = mother.GetComponent<AMGroup> ().getSegment (r, 30 - 1);
+			yield return StartCoroutine (father[0].GetComponent<AMGroup> ().move (new Vector3 (-45, 0, 0), 1f));
+			yield return StartCoroutine (mother[0].GetComponent<AMGroup> ().move (new Vector3 (-15, 0, 0), 1f));
+			GameObject go1 = father[0].GetComponent<AMGroup> ().getSegment (0, r);
+			GameObject go2 = mother[0].GetComponent<AMGroup> ().getSegment (r, 30 - 1);
 			yield return StartCoroutine (go1.GetComponent<AMGroup> ().move (new Vector3 (-30, 0, 0), 1f));
 			yield return StartCoroutine (go2.GetComponent<AMGroup> ().move (new Vector3 (-30, 7 + r * 10, 0), 1f));
-			yield return StartCoroutine (father.GetComponent<AMGroup> ().delete ());
-			yield return StartCoroutine (mother.GetComponent<AMGroup> ().delete ());
-			yield return StartCoroutine (go1.GetComponent<AMGenePieces> ().delete ());
-			yield return StartCoroutine (go2.GetComponent<AMGenePieces> ().delete ());
+			father[0].GetComponent<AMGenePieces>().delete ();
+			mother[0].GetComponent<AMGenePieces> ().delete ();
+			go1.GetComponent<AMGenePieces> ().delete ();
+			go2.GetComponent<AMGenePieces> ().delete ();
 		}
 	}
  }
