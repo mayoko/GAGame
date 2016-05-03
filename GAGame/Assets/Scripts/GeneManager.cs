@@ -12,6 +12,14 @@ public class GeneManager : MonoBehaviour {
         public int playFrame;
         // 突然変異率
         public float mutationRate;
+        // 交叉のやり方
+        public int crossingMode;
+        // 淘汰のやり方
+        public int selectionMode;
+        // ステージの難易度
+        public int difficulty;
+        // 交配に使う親の数(?)
+        public int parentNum;
     }
     public static Param param = new Param();
     // AnimationとかSakeruCheeseとかにまたがるビューのパラメータをまとめたクラス
