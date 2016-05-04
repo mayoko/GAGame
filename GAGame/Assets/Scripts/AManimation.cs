@@ -6,7 +6,7 @@ public class AManimation : MonoBehaviour {
 	// Use this for initialization
 	int[] score;
 	GameObject[] scoreobject;
-	public GameObject element;
+    public GameObject element;
 
 	//遺伝子の配列情報（-1,0,1を適当な色に置き換えておく）
 	int[][] colorarray;
@@ -24,6 +24,15 @@ public class AManimation : MonoBehaviour {
 
 	void Start () {
 		//親の遺伝子集団の作成(並べるだけ)
+		score = new int[50];
+		scoreobject = new GameObject[50];
+		geneobject = new GameObject[30];
+		generationgenes = new GameObject[50][];
+		colorarray = new int[50][];
+		for (int i = 0; i < 50; i++) {
+			generationgenes [i] = new GameObject[30];
+			colorarray[i] = new int[30];
+		}
 		for (int i=0; i<25; i++){
 			scoreobject [i] = Instantiate (element, new Vector3 (i*15, 0, 0), Quaternion.identity) as GameObject;
 			for (int k = 0; k < 30; k++) {
@@ -49,7 +58,6 @@ public class AManimation : MonoBehaviour {
 	private IEnumerator cross ()
 	{
 		//親の移動
-		　
 		for (int i = 0; i < 50; i++) {
 			father = generationgenes [fatherarray [i]];
 			mother = generationgenes [motherarray [i]];
