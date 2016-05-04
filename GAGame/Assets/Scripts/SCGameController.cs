@@ -17,13 +17,18 @@ public class SCGameController : MonoBehaviour {
     int testFrame; //加速したりしてもスコアをカウントできるように
 
 	public GameObject sakeruEnemyObject;
+	public TextAsset enemyPattern1;
+	public TextAsset enemyPattern2;
+	public TextAsset enemyPattern3;
 	public TextAsset enemyPattern;
+
 	public float[][] enemyInfo; 
 	//読み込んだEnemyPatternの情報を保持.[n]がn番目の敵の情報の配列.敵の情報は(縦の長さ,横の長さ,出現位置,速度,時間)
 	public int enemyNum = 0; //次のEnemyが何番目かを保持.0から
 	private int enemyFrame = 99999999; //次のEnemyが出現するフレームを保持
 	private int enemyPop; //Enemyの数
 
+	public int scDifficulty;
 
     void Start()
     {
@@ -135,7 +140,17 @@ public class SCGameController : MonoBehaviour {
 
     //Enemyのデータを外部ファイルから読みだす
     void ReadEnemyPattern(){
-        string[] patternInfo = enemyPattern.text.Split("\n"[0]);
+		string[] patternInfo;
+		if (GeneManager.param.difficulty == 1) {
+			patternInfo = enemyPattern1.text.Split ("\n" [0]);
+		} else if (GeneManager.param.difficulty == 2) {
+			patternInfo = enemyPattern2.text.Split ("\n" [0]);
+		} else if (GeneManager.param.difficulty == 3) {
+			patternInfo = enemyPattern3.text.Split ("\n" [0]);
+		} else {
+			patternInfo = enemyPattern.text.Split ("\n" [0]);
+		}
+			
 		enemyPop = patternInfo.Length;
 		enemyInfo = new float[enemyPop][];
 

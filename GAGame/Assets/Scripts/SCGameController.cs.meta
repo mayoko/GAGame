@@ -1,16 +1,20 @@
 fileFormatVersion: 2
 guid: fe099c7ac33a8a243991456377aeea5e
-timeCreated: 1458883648
+timeCreated: 1462337817
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - scoreLabel: {instanceID: 0}
   - aliveLabel: {instanceID: 0}
+  - generationLabel: {instanceID: 0}
   - sakeruButtonObject: {instanceID: 0}
   - playerPrefab: {instanceID: 0}
   - sakeruEnemyObject: {fileID: 193314, guid: 674dc80ab0fcc0b4eb53617ab9a65dcb, type: 2}
-  - enemyPattern: {instanceID: 0}
+  - enemyPattern1: {fileID: 4900000, guid: 33e74e39deced9a4d8c613434da14f8c, type: 3}
+  - enemyPattern2: {fileID: 4900000, guid: 6580b4e20b2125040a53f62d5d3a847d, type: 3}
+  - enemyPattern3: {fileID: 4900000, guid: a83477dc9d1f54345815053c70911ca5, type: 3}
+  - enemyPattern: {fileID: 4900000, guid: c6222666dad589740a6fd24f9bb36a6c, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
