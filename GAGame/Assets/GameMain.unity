@@ -208,7 +208,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679596927}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &27113604
@@ -698,7 +709,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 160}
-  m_SizeDelta: {x: 300, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72958888
 MonoBehaviour:
@@ -726,7 +737,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2061,7 +2072,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &580730386
@@ -2354,7 +2376,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679596928}
+        m_MethodName: changeCrossMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &685070141
@@ -2945,10 +2978,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 37085542}
   m_HandleRect: {fileID: 942450143}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 20
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3246,7 +3279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: "\u30E6\u30FC\u30B6\u30FC\u6307\u5B9A"
 --- !u!222 &864671081
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3707,7 +3740,7 @@ GameObject:
   - 114: {fileID: 981334667}
   - 114: {fileID: 981334666}
   m_Layer: 5
-  m_Name: TemplateDropdown
+  m_Name: PatternDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3774,18 +3807,31 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 1619274421}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 3
   m_Options:
     m_Options:
-    - m_Text: 1
+    - m_Text: "\u30C7\u30D5\u30A9\u30EB\u30C8"
       m_Image: {fileID: 0}
-    - m_Text: 2
+    - m_Text: "\u30C6\u30F3\u30D7\u30EC1"
       m_Image: {fileID: 0}
-    - m_Text: 3
+    - m_Text: "\u30C6\u30F3\u30D7\u30EC2"
+      m_Image: {fileID: 0}
+    - m_Text: "\u30E6\u30FC\u30B6\u30FC\u6307\u5B9A"
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1679596928}
+        m_MethodName: changePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &981334667
@@ -3936,9 +3982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fea83b03bf9ade478e857b1c308ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumBar: {fileID: 0}
-  mutationRateBar: {fileID: 0}
-  frameCountBar: {fileID: 0}
 --- !u!114 &1130422949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4784,15 +4827,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 1157284641}
   m_HandleRect: {fileID: 1234158624}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -3
+  m_MaxValue: 0
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: -2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1679596927}
-        m_MethodName: 
+      - m_Target: {fileID: 1679596928}
+        m_MethodName: changeMutationRate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5076,8 +5119,8 @@ RectTransform:
   m_RootOrder: 7
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290, y: 69.99999}
-  m_SizeDelta: {x: 30, y: 60}
+  m_AnchoredPosition: {x: 295, y: 69.99999}
+  m_SizeDelta: {x: 50, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1563028417
 MonoBehaviour:
@@ -5130,7 +5173,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 13
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -5141,7 +5184,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0.001
+  m_Text: 00.00%
 --- !u!222 &1563028419
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5734,7 +5777,7 @@ MonoBehaviour:
   CrossDropdown: {fileID: 685070140}
   SelectDropdown: {fileID: 27113603}
   DifficultyDropdown: {fileID: 580730385}
-  TemplateDropdown: {fileID: 981334666}
+  PatternDropdown: {fileID: 981334666}
 --- !u!4 &1679596929
 Transform:
   m_ObjectHideFlags: 0
@@ -6171,14 +6214,14 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1118676055}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1679596928}
-        m_MethodName: changeGroupSize
+        m_MethodName: changeSurviverNum
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6740,15 +6783,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 2137159773}
   m_HandleRect: {fileID: 1279822701}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 30
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1679596928}
-        m_MethodName: changeGroupSize
+        m_MethodName: changeFPG
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7459,7 +7502,7 @@ GameObject:
   - 114: {fileID: 2113515559}
   - 114: {fileID: 2113515558}
   m_Layer: 5
-  m_Name: TemplateText
+  m_Name: PatternText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7556,7 +7599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30C6\u30F3\u30D7\u30EC"
+  m_Text: "\u30D1\u30BF\u30FC\u30F3"
 --- !u!222 &2113515560
 CanvasRenderer:
   m_ObjectHideFlags: 0
