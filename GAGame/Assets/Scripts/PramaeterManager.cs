@@ -1,16 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PramaeterManager : MonoBehaviour {
 	public UnityEngine.UI.Text GroupSizeValue;
 	public UnityEngine.UI.Slider GroupSizeSlider;
-
+	public UnityEngine.UI.Text MutationRateValue;
+	public UnityEngine.UI.Slider MutationRateSlider;
+	public UnityEngine.UI.Text SuviverNumValue;
+	public UnityEngine.UI.Slider SuviverNumSlider;
+	public UnityEngine.UI.Text FPGValue;
+	public UnityEngine.UI.Slider FPGSlider;
+	public UnityEngine.UI.Dropdown CrossDropdown;
+	public UnityEngine.UI.Dropdown SelectDropdown;
+	public UnityEngine.UI.Dropdown DifficultyDropdown;
+	public UnityEngine.UI.Dropdown TemplateDropdown;
 	// Use this for initialization
 	void Start () {
+		//GroupSize
+		GeneManager.param.playerNum = 50;
 		GroupSizeValue.text = GeneManager.param.playerNum.ToString ();
-		GroupSizeSlider.value = GeneManager.param.playerNum;
-		GroupSizeSlider.maxValue = 100;
-		GroupSizeSlider.minValue = 20;
+		//GroupSizeSlider.maxValue = 100;
+		//GroupSizeSlider.minValue = 20;
+		//GroupSizeSlider.value = (float)GeneManager.param.playerNum;
+		//MutationRate
+		GeneManager.param.mutationRate = 0.01f;
+		MutationRateValue.text = GeneManager.param.mutationRate.ToString ("#0.##%");
+		//MutationRateSlider.maxValue = 0;
+		//MutationRateSlider.minValue = -3;
+		//MutationRateSlider.value = (float)Math.Log10(GeneManager.param.playerNum);
+		//SuviverNum
+		GeneManager.param.surviverNum = 5;
+		SuviverNumValue.text = GeneManager.param.surviverNum.ToString ();
+		//SuviverNumSlider.maxValue = 30;
+		//SuviverNumSlider.minValue = 1;
+		//SuviverNumSlider.value = GeneManager.param.surviverNum;
+		//FPG
+		GeneManager.param.framePerGene = 5;
+		FPGValue.text = GeneManager.param.framePerGene.ToString ();
+		//FPGSlider.maxValue = 30;
+		//FPGSlider.minValue = 1;
+		//FPGSlider.value = GeneManager.param.framePerGene;
+		//CrossMode
+		GeneManager.param.crossingMode=1;
+		CrossDropdown.value = GeneManager.param.crossingMode;
+		//SelectMode
+		GeneManager.param.selectionMode=1;
+		SelectDropdown.value = GeneManager.param.selectionMode;
+		//Difficulty
+		GeneManager.param.difficulty=1;
+		DifficultyDropdown.value = GeneManager.param.difficulty;
 	}
 	
 	// Update is called once per frame
@@ -22,5 +61,32 @@ public class PramaeterManager : MonoBehaviour {
 	{
 		GeneManager.param.playerNum=(int)GroupSizeSlider.value;
 		GroupSizeValue.text = GeneManager.param.playerNum.ToString ();
+	}
+	public void changeMutationRate()
+	{
+		GeneManager.param.mutationRate = (float)Math.Pow (10.0d, MutationRateSlider.value);
+		MutationRateValue.text = GeneManager.param.mutationRate.ToString("#0.##%");
+	}
+	public void changeSurviverNum()
+	{
+		GeneManager.param.surviverNum=(int)SuviverNumSlider.value;
+		SuviverNumValue.text = GeneManager.param.surviverNum.ToString ();
+	}
+	public void changeFPG()
+	{
+		GeneManager.param.framePerGene=(int)FPGSlider.value;
+		FPGValue.text = GeneManager.param.framePerGene.ToString();
+	}
+	public void changeCrossMode()
+	{
+		GeneManager.param.crossingMode=CrossDropdown.value;
+	}
+	public void changeSelectMode()
+	{
+		GeneManager.param.selectionMode=SelectDropdown.value;
+	}
+	public void changeDifficulty()
+	{
+		GeneManager.param.difficulty=DifficultyDropdown.value;
 	}
 }

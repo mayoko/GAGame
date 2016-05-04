@@ -10,6 +10,8 @@ public class GeneManager : MonoBehaviour {
         // 変数名はへんだがそう読み替えることになった #声に出して読みたい日本語
         // 遺伝子の長さです
         public int playFrame;
+		//
+		public int framePerGene;
         // 突然変異率
         public float mutationRate;
         // 交叉のやり方
@@ -18,8 +20,8 @@ public class GeneManager : MonoBehaviour {
         public int selectionMode;
         // ステージの難易度
         public int difficulty;
-        // 交配に使う親の数(?)
-        public int parentNum;
+        // 生存者数
+        public int surviverNum;
     }
     public static Param param = new Param();
     // AnimationとかSakeruCheeseとかにまたがるビューのパラメータをまとめたクラス
