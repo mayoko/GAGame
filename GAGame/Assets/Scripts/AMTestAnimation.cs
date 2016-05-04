@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 // アニメーションのサンプル
+// fadeOut は複数の genePiece を同時に透明にしていって最後に消す関数
 public class AMTestAnimation : MonoBehaviour
 {
     public GameObject group, element, kao;
@@ -65,9 +67,16 @@ public class AMTestAnimation : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
     }
+    private void skip()
+    {
+        SceneManager.LoadScene("SakeruCheese");
+    }
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.Space))
+        {
+            skip();
+        }
     }
 }
