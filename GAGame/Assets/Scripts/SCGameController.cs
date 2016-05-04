@@ -17,6 +17,7 @@ public class SCGameController : MonoBehaviour {
     int testFrame; //加速したりしてもスコアをカウントできるように
 
 	public GameObject sakeruEnemyObject;
+	public TextAsset enemyPattern0;
 	public TextAsset enemyPattern1;
 	public TextAsset enemyPattern2;
 	public TextAsset enemyPattern3;
@@ -142,7 +143,9 @@ public class SCGameController : MonoBehaviour {
     void ReadEnemyPattern(){
 		string[] patternInfo;
 		GeneManager.param.difficulty = 3;
-		if (GeneManager.param.difficulty == 1) {
+		if (GeneManager.param.difficulty == 0) {
+			patternInfo = enemyPattern0.text.Split ("\n" [0]);
+		} else if (GeneManager.param.difficulty == 1) {
 			patternInfo = enemyPattern1.text.Split ("\n" [0]);
 		} else if (GeneManager.param.difficulty == 2) {
 			patternInfo = enemyPattern2.text.Split ("\n" [0]);

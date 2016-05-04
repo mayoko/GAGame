@@ -1693,9 +1693,10 @@ MonoBehaviour:
   fpg: 5
   finalFrame: 0
   sakeruEnemyObject: {fileID: 193314, guid: 674dc80ab0fcc0b4eb53617ab9a65dcb, type: 2}
-  enemyPattern1: {fileID: 4900000, guid: 33e74e39deced9a4d8c613434da14f8c, type: 3}
-  enemyPattern2: {fileID: 4900000, guid: 6580b4e20b2125040a53f62d5d3a847d, type: 3}
-  enemyPattern3: {fileID: 4900000, guid: a83477dc9d1f54345815053c70911ca5, type: 3}
+  enemyPattern0: {fileID: 4900000, guid: 33e74e39deced9a4d8c613434da14f8c, type: 3}
+  enemyPattern1: {fileID: 4900000, guid: 6580b4e20b2125040a53f62d5d3a847d, type: 3}
+  enemyPattern2: {fileID: 4900000, guid: a83477dc9d1f54345815053c70911ca5, type: 3}
+  enemyPattern3: {fileID: 4900000, guid: 4d3dbdcd36c45df40974604b21dc6bd2, type: 3}
   enemyPattern: {fileID: 4900000, guid: c6222666dad589740a6fd24f9bb36a6c, type: 3}
   enemyNum: 0
   scDifficulty: 0
