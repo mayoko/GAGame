@@ -12,8 +12,27 @@ public class GeneManager : MonoBehaviour {
         public int playFrame;
         // 突然変異率
         public float mutationRate;
+        // 交叉のやり方
+        public int crossingMode;
+        // 淘汰のやり方
+        public int selectionMode;
+        // ステージの難易度
+        public int difficulty;
+        // 交配に使う親の数(?)
+        public int parentNum;
     }
     public static Param param = new Param();
+    // AnimationとかSakeruCheeseとかにまたがるビューのパラメータをまとめたクラス
+    public class ViewParam
+    {
+        // 再生速度
+        public float playSpeed = 1.0f;
+        // スキップモード
+        public bool isSkipping = false;
+        // 遺伝子の世代 (ここに置くべきではない)
+        public int generation = 0;
+    }
+    public static ViewParam viewParam = new ViewParam();
     // player に関する情報をまとめたクラス
     public class Player
     {

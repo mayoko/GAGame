@@ -74,7 +74,7 @@ public class SCPlayerController : MonoBehaviour {
     public void Die()
     {
         attr.score = gc.getScore();
-        Debug.Log(myNum.ToString() + "番のPlayerがf." + gc.getCurrentFrame().ToString() + "で死んでScoreは" + attr.score.ToString() + "でした．");
+        //Debug.Log(myNum.ToString() + "番のPlayerがf." + gc.getCurrentFrame().ToString() + "で死んでScoreは" + attr.score.ToString() + "でした．");
 
         // Destroy(child)だと子のtransformコンポーネントが死ぬだけなので注意
         foreach (Transform child in transform) Destroy(child.gameObject);
