@@ -63,10 +63,10 @@ public class GeneManager : MonoBehaviour {
     void Start () {
         param = new Param();
         param.playFrame = 150;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+    
+    // Update is called once per frame
+    void Update () {
+    
+    }
 }
