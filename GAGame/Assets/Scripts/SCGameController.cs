@@ -141,6 +141,7 @@ public class SCGameController : MonoBehaviour {
     //Enemyのデータを外部ファイルから読みだす
     void ReadEnemyPattern(){
 		string[] patternInfo;
+		GeneManager.param.difficulty = 3;
 		if (GeneManager.param.difficulty == 1) {
 			patternInfo = enemyPattern1.text.Split ("\n" [0]);
 		} else if (GeneManager.param.difficulty == 2) {
@@ -167,12 +168,19 @@ public class SCGameController : MonoBehaviour {
     void EnemyAppear()
     {
         float enemyX;
-        if (enemyInfo[enemyNum][3] > 0) enemyX = 11.0f;
-        else enemyX = -11.0f;
+		Vector3 enemyAngle = new Vector3( 0.0f, 0.0f, 0.0f );
+		if (enemyInfo [enemyNum] [3] > 0) {
+			enemyX = 11.0f;
+		}
+		else {
+			enemyX = -11.0f;
+			enemyInfo [enemyNum] [3] = -enemyInfo [enemyNum] [3];
+			enemyAngle[1] = 180.0f;
+		}
 
         GameObject enemy = Instantiate(sakeruEnemyObject,
                                             new Vector3(enemyX, 0.0f, enemyInfo[enemyNum][2]),
-                                            Quaternion.identity) as GameObject;
+			Quaternion.Euler(enemyAngle)) as GameObject;
         SCEnemyController scec = enemy.GetComponent<SCEnemyController>();
         scec.enemySpeed = enemyInfo[enemyNum][3];
         scec.transform.localScale = new Vector3(enemyInfo[enemyNum][1], 1.0f, enemyInfo[enemyNum][0]);
