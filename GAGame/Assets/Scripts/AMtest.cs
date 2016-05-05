@@ -4,7 +4,8 @@ using System.Collections;
 public class AMtest : MonoBehaviour {
     int[] score;
     GameObject[] scoreobject;
-    public GameObject element;
+    public GameObject element, kao;
+    GeneManager.ViewParam vp = GeneManager.viewParam;
 
     //遺伝子の配列情報（-1,0,1を適当な色に置き換えておく）
     int[][] colorarray;
@@ -63,17 +64,63 @@ public class AMtest : MonoBehaviour {
             yield return StartCoroutine (mother.GetComponent<AMGroup> ().move (new Vector3 (0, 0, -70), 1f));
             GameObject go1 = father.GetComponent<AMGroup> ().getSegment (0, r);
             GameObject go2 = mother.GetComponent<AMGroup> ().getSegment (r+1, 30 - 1);
-            yield return StartCoroutine (go1.GetComponent<AMGenePieces> ().move (new Vector3 (12, 0, -85), 1f));
-            yield return StartCoroutine (go2.GetComponent<AMGenePieces> ().move (new Vector3 (12+7 + r * 10, 0, -85), 1f));
-            go1.GetComponent<AMGenePieces> ().delete ();
-            go2.GetComponent<AMGenePieces> ().delete ();
-            yield return StartCoroutine (father.GetComponent<AMGroup> ().move (new Vector3 (0, 0, 0), 0f));
-            yield return StartCoroutine (mother.GetComponent<AMGroup> ().move (new Vector3 (0, 0, 0), 0f));
+            GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
+            yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 1f));
+            yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f));
+            GameObject[] gogo = { go1, go2 };
+            yield return StartCoroutine(fadeOut(face, gogo));
+            go1.GetComponent<AMGenePieces>().delete();
+            go2.GetComponent<AMGenePieces>().delete();
+            if (fatherarray[i] < 25)
+            {
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, fatherarray[i] * 15), 0f));
+            }
+            else
+            {
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(320, 0, (fatherarray[i]-25) * 15), 0f));
+            }
+            if (motherarray[i] < 25)
+            {
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, motherarray[i] * 15), 0f));
+            }
+            else
+            {
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i]-25) * 15), 0f));
+            }
         }
     }
-    
+    // 交差専用
+    // 同時に複数の GenePieces と頭を自然消滅させる
+    private IEnumerator fadeOut(GameObject face, GameObject[] gps)
+    {
+        float fadeTime = 1f / vp.playSpeed;
+        float currentRemainTime = fadeTime;
+        float interval = 0.01f;
+        int sz = gps.Length;
+        while (true)
+        {
+            currentRemainTime -= interval;
+            Debug.Log(currentRemainTime);
+            if (currentRemainTime <= 0f)
+            {
+                Destroy(face);
+                for (int i = 0; i < sz; i++)
+                {
+                    gps[i].GetComponent<AMGenePieces>().delete();
+                    Destroy(gps[i]);
+                }
+                yield break;
+            }
+            float alpha = currentRemainTime / fadeTime;
+            face.GetComponent<AMElement>().setAlpha(alpha);
+            for (int i = 0; i < sz; i++) gps[i].GetComponent<AMGenePieces>().setAlpha(alpha);
+            yield return new WaitForSeconds(interval);
+        }
+    }
+
     // Update is called once per frame
-    void Update () {
-    
+    void Update()
+    {
+
     }
 }
