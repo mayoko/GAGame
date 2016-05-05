@@ -32,6 +32,16 @@ public class GeneCalcController : MonoBehaviour {
 		groupSize = GeneManager.param.playerNum;
 		mutationRate = GeneManager.param.mutationRate;
 		geneSize = GeneManager.param.playFrame;
+		surviveNum = GeneManager.param.surviverNum;
+		if (GeneManager.param.selectionMode > 0) {
+			selectionOption = 1;
+			if (GeneManager.param.selectionMode == 2) {
+				topSelectNum = 30 * groupSize / 100;
+			}
+		} else {
+			selectionOption = 0;
+		}
+		crossOption = GeneManager.param.crossingMode;
 		childNum=groupSize-surviveNum;
 		mainScene = SceneManager.GetSceneByName ("GameMain");
 
@@ -91,18 +101,18 @@ public class GeneCalcController : MonoBehaviour {
 	{
 		selectScoreAccumArray = new float[groupSize];
 		switch (selectionOption) {
-		case 0: //top random
+		case 0: //proportion to score
+			selectScoreAccumArray [0] = players [0].score;
+			for (int i = 1; i < groupSize; i++) {
+				selectScoreAccumArray [i] = selectScoreAccumArray [i - 1] + players [i].score;
+			}
+			break;
+		case 1: //top random
 			for (int i = 0; i < Math.Min (topSelectNum, groupSize); i++) {
 				selectScoreAccumArray [i] = (float)(i + 1);
 			}
 			for (int i = Math.Min (topSelectNum, groupSize); i < groupSize; i++) {
 				selectScoreAccumArray [i] = selectScoreAccumArray [i - 1];
-			}
-			break;
-		case 1: //proportion to score
-			selectScoreAccumArray [0] = players [0].score;
-			for (int i = 1; i < groupSize; i++) {
-				selectScoreAccumArray [i] = selectScoreAccumArray [i - 1] + players [i].score;
 			}
 			break;
 		}
