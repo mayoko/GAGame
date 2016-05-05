@@ -37,7 +37,7 @@ public class SCGameController : MonoBehaviour {
         geneSize = GeneManager.param.playFrame; // 変数名はへんだがそう読み替えることになった
         //firstFrame = Time.frameCount;
         finalFrame = fpg*geneSize-1;
-
+		fpg = GeneManager.param.framePerGene;
         testFrame = 0;
 
         // Player周り
