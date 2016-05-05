@@ -134,6 +134,10 @@ public class AMGenePieces : MonoBehaviour
         int sz = gameObjects.Length;
         for (int i = 0; i < sz; i++) gameObjects[i].GetComponent<AMElement>().setAlpha(alpha);
     }
+    public int Length()
+    {
+        return gameObjects.Length;
+    }
     // Update is called once per frame
     void Update()
     {
