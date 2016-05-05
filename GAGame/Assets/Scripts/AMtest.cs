@@ -155,12 +155,13 @@ public class AMtest : MonoBehaviour {
     {
         float fadeTime = 1f / vp.playSpeed;
         float currentRemainTime = fadeTime;
-        float interval = 0.01f;
+        float interval = AMCommon.interval;
         int sz = gps.Length;
+        float buffer = 0f; // getIntervalに渡すやつ
         while (true)
         {
             currentRemainTime -= interval;
-            Debug.Log(currentRemainTime);
+            // Debug.Log(currentRemainTime);
             if (currentRemainTime <= 0f)
             {
                 Destroy(face);
@@ -174,7 +175,7 @@ public class AMtest : MonoBehaviour {
             float alpha = currentRemainTime / fadeTime;
             face.GetComponent<AMElement>().setAlpha(alpha);
             for (int i = 0; i < sz; i++) gps[i].GetComponent<AMGenePieces>().setAlpha(alpha);
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
         }
     }
 

@@ -32,7 +32,7 @@ public class AMGroup : MonoBehaviour {
     // instantiate されたときに呼ばれる関数
     // 要するに初期化してくれる
     void Awake() {
-        interval = 0.01f;
+        interval = AMCommon.interval;
         geneSize = 30;
         face = new GameObject();
         face = Instantiate(facePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
@@ -54,9 +54,11 @@ public class AMGroup : MonoBehaviour {
     // 速度調整するときは t を調整すれば良い
     public IEnumerator move(Vector3 to, float t)
     {
+        float buffer = 0f; // getIntervalに渡すやつ
         // 動きが終わるまでは while から抜けないこと
         while (true)
         {
+
             // 各オブジェクトを目標位置に動かす
             face.GetComponent<AMElement>().moveWith(to, t);
             for (int i = 0; i < geneSize; i++)
@@ -71,13 +73,14 @@ public class AMGroup : MonoBehaviour {
                 Debug.Log ("finish!");
                 yield break;
             }
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
         }
     }
     // 配列で指定されたオブジェクトを t 秒間点滅させる
     public IEnumerator blink(int[] v, float t) {
         if (v == null)
             yield break;
+        float buffer = 0f; // getIntervalに渡すやつ
         while (true) {
             for (int i = 0; i < v.Length; i++) {
                 genes [v [i]].GetComponent<AMElement> ().blinkWith (t);
@@ -90,7 +93,7 @@ public class AMGroup : MonoBehaviour {
                 Debug.Log ("finish!");
                 yield break;
             }
-            yield return new WaitForSeconds (10 * interval);
+            yield return new WaitForSeconds (AMCommon.getInterval(10 * interval, ref buffer));
         }
     }
     // 配列を与えられるので, genes の色を変更する

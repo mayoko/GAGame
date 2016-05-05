@@ -25,7 +25,7 @@ public class AMElement : MonoBehaviour
 
     void Awake()
     {
-        interval = 0.01f;
+        interval = AMCommon.interval;
         progress = 0;
         renderer = GetComponent<Renderer>();
         renderer.material.SetFloat("_Mode", 3);
@@ -49,6 +49,7 @@ public class AMElement : MonoBehaviour
             transform.position = to;
             yield break;
         }
+        float buffer = 0f; // getIntervalに渡すやつ
         // 動きが終わるまでは while から抜けないこと
         while (true)
         {
@@ -69,12 +70,13 @@ public class AMElement : MonoBehaviour
                 transform.position = to; // 行き過ぎを修正 (cexen)
                 yield break;
             }
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
         }
     }
     // オブジェクトを t 秒の間点滅させる
     public IEnumerator blink(float t)
     {
+        float buffer = 0f; // getIntervalに渡すやつ
         while (true)
         {
             GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
@@ -86,7 +88,7 @@ public class AMElement : MonoBehaviour
                 yield break;
             }
             else
-                yield return new WaitForSeconds(10 * interval);
+                yield return new WaitForSeconds(AMCommon.getInterval(10 * interval, ref buffer));
         }
     }
     public void blinkWith(float t)
