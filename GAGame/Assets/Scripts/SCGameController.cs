@@ -12,9 +12,8 @@ public class SCGameController : MonoBehaviour {
     public int geneSize;
     public int fpg = 5; // Frames per Gene. 1geneの指示する動作を何フレーム継続するか
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
-    private int firstFrame; // frame数計測用
-
-    int testFrame; //加速したりしてもスコアをカウントできるように
+    //private int firstFrame; // frame数計測用
+	int testFrame; //加速したりしてもスコアをカウントできるように
 
 	public GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern0;
@@ -36,7 +35,7 @@ public class SCGameController : MonoBehaviour {
         // インフラ周り
         GeneManager.viewParam.generation++; // ここに書くべきではない
         geneSize = GeneManager.param.playFrame; // 変数名はへんだがそう読み替えることになった
-        firstFrame = Time.frameCount;
+        //firstFrame = Time.frameCount;
         finalFrame = fpg*geneSize-1;
 
         testFrame = 0;
