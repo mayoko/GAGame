@@ -54,7 +54,6 @@ public class GeneCalcController : MonoBehaviour {
 			players [surviveNum + i].gene = childGene [i];
 		}
         Debug.Log("gene clac completed!");
-        SceneManager.LoadScene("SakeruCheese");
     }
 
 
