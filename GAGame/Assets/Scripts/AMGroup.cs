@@ -18,6 +18,8 @@ public class AMGroup : MonoBehaviour {
     public GameObject genePrefab;
     // オブジェクトをまとめておくための配列
     private GameObject[] genes;
+    // カラー配列
+    private int[] colorArray;
     // genes の prefab
     public GameObject prefab;
     // 何秒周期で動かすか
@@ -25,16 +27,17 @@ public class AMGroup : MonoBehaviour {
     // オブジェクトの個数(3000 個らへん超えるとかなり重くなる)
     public int geneSize;
     // 遺伝子をあらわすキューブの大きさ
-    const int cubeSize = 1;
+    const int cubeSize = 10;
 
     // instantiate されたときに呼ばれる関数
     // 要するに初期化してくれる
     void Awake() {
         interval = 0.01f;
-        geneSize = 1000;
+        geneSize = 30;
         face = new GameObject();
         face = Instantiate(facePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         genes = new GameObject[geneSize];
+        colorArray = new int[geneSize];
         for (int i = 0; i < geneSize; i++)
         {
             // 指定した座標にオブジェクトを作る
@@ -95,6 +98,7 @@ public class AMGroup : MonoBehaviour {
     {
         for (int i = 0; i < v.Length; i++)
         {
+            colorArray[i] = v[i];
             switch (v[i])
             {
                 case -1:
@@ -131,6 +135,12 @@ public class AMGroup : MonoBehaviour {
             Debug.Log("finish!");
         }
     }
+    // 要素を全消しする
+    public void delete()
+    {
+        Destroy(face);
+        for (int i = 0; i < geneSize; i++) Destroy(genes[i]);
+    }
     // 区間が与えられるので, その部分の gene の集合を AMGenePieces として返す
     // [l, r] 区間にしています
     public GameObject getSegment(int l, int r)
@@ -138,6 +148,11 @@ public class AMGroup : MonoBehaviour {
         GameObject genePieces = Instantiate(genePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         genePieces.GetComponent<AMGenePieces>().setParams(r - l + 1, genes[l].transform.position);
         int[] vs = new int[r - l + 1];
+        for (int i = 0; i <= r - l; i++)
+        {
+            vs[i] = colorArray[i + l];
+        }
+        genePieces.GetComponent<AMGenePieces>().setColor(vs);
         return genePieces;
     }
 
