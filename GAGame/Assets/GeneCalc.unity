@@ -486,7 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: {fileID: 184512, guid: e6153e9d5b1ff0c449279b9274b2fd5f, type: 2}
   kao: {fileID: 163074, guid: e8cbf39f623ac7b40982f5003ef33891, type: 2}
-  camera: {fileID: 2130727226}
+  mcamera: {fileID: 2130727226}
 --- !u!4 &587368171
 Transform:
   m_ObjectHideFlags: 0

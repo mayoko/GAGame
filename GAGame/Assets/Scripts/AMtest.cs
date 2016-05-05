@@ -89,7 +89,7 @@ public class AMtest : MonoBehaviour {
             else if (GeneManager.param.crossingMode == 1)
             {
                 // 交叉ポイント
-                int r = Random.Range(2, 27), q = Random.Range(r, 29);
+                int r = Random.Range(2, 27), q = Random.Range(r + 1, 29);
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, q);
                 GameObject go3 = father.GetComponent<AMGroup>().getSegment(q + 1, 30 - 1);
