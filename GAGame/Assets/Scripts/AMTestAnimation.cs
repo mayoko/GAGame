@@ -12,10 +12,10 @@ public class AMTestAnimation : MonoBehaviour
     void Start()
     {
         // まず Instantiate 関数でオブジェクトを作る
-        element = Instantiate(element, new Vector3(-2, 0, 0), Quaternion.identity) as GameObject;
-        group = Instantiate(group, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+        //element = Instantiate(element, new Vector3(-2, 0, 0), Quaternion.identity) as GameObject;
+        //group = Instantiate(group, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         // Sample にアニメーションの動きを次々に書いていく
-        StartCoroutine("Sample");
+        //StartCoroutine("Sample");
     }
     private IEnumerator Sample()
     {

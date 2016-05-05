@@ -24,7 +24,7 @@ public class AMGenePieces : MonoBehaviour
     // オブジェクトの個数(3000 個らへん超えるとかなり重くなる)
     public int geneSize;
     // 遺伝子をあらわすキューブの大きさ
-    const int cubeSize = 1;
+    const int cubeSize = 10;
 
     // instantiate されたときに呼ばれる関数
     // 要するに初期化してくれる
