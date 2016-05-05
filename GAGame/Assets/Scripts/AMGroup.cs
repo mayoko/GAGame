@@ -25,7 +25,7 @@ public class AMGroup : MonoBehaviour {
     // オブジェクトの個数(3000 個らへん超えるとかなり重くなる)
     public int geneSize;
     // 遺伝子をあらわすキューブの大きさ
-    const int cubeSize = 1;
+    const int cubeSize = 10;
 
     // instantiate されたときに呼ばれる関数
     // 要するに初期化してくれる
@@ -130,6 +130,12 @@ public class AMGroup : MonoBehaviour {
                 genes[i].GetComponent<AMElement>().progress = 0;
             Debug.Log("finish!");
         }
+    }
+    // 要素を全消しする
+    public void delete()
+    {
+        Destroy(face);
+        for (int i = 0; i < geneSize; i++) Destroy(genes[i]);
     }
     // 区間が与えられるので, その部分の gene の集合を AMGenePieces として返す
     // [l, r] 区間にしています
