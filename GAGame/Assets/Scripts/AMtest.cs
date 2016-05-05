@@ -24,9 +24,17 @@ public class AMtest : MonoBehaviour {
     void Start () {
         // input
         score = new int[50];
+        for (int i = 0; i < 50; i++)
+        {
+            score[i] = Random.Range(0, 50);
+        }
         colorarray = new int[50][];
         for (int i = 0; i < 50; i++) {
             colorarray[i] = new int[30];
+            for (int j = 0; j < 30; j++)
+            {
+                colorarray[i][j] = Random.Range(-1, 1+1);
+            }
         }
         //親の遺伝子集団の作成(並べるだけ)
         geneObject = new GameObject[50];
@@ -47,8 +55,8 @@ public class AMtest : MonoBehaviour {
         }
         fatherarray = new int[50];
         motherarray = new int[50];
-        for (int i = 0; i < 50; i++) motherarray[i] = 1;
-        for (int i = 0; i < 50; i++) fatherarray[i] = 10;
+        for (int i = 0; i < 50; i++) motherarray[i] = Random.Range(0, 50);
+        for (int i = 0; i < 50; i++) fatherarray[i] = Random.Range(0, 50);
         //交叉の開始
         StartCoroutine ("cross");
     }
