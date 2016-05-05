@@ -141,7 +141,6 @@ public class SCGameController : MonoBehaviour {
     //Enemyのデータを外部ファイルから読みだす
     void ReadEnemyPattern(){
 		string[] patternInfo;
-		GeneManager.param.difficulty = 3;
 		if (GeneManager.param.difficulty == 0) {
 			patternInfo = enemyPattern0.text.Split ("\n" [0]);
 		} else if (GeneManager.param.difficulty == 1) {
