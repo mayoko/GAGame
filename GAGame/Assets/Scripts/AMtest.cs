@@ -69,8 +69,6 @@ public class AMtest : MonoBehaviour {
             yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f));
             GameObject[] gogo = { go1, go2 };
             yield return StartCoroutine(fadeOut(face, gogo));
-            go1.GetComponent<AMGenePieces>().delete();
-            go2.GetComponent<AMGenePieces>().delete();
             if (fatherarray[i] < 25)
             {
                 yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, fatherarray[i] * 15), 0f));
