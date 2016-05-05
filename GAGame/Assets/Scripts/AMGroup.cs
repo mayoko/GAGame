@@ -31,7 +31,7 @@ public class AMGroup : MonoBehaviour {
     // 要するに初期化してくれる
     void Awake() {
         interval = 0.01f;
-        geneSize = 1000;
+        geneSize = 30;
         face = new GameObject();
         face = Instantiate(facePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         genes = new GameObject[geneSize];
