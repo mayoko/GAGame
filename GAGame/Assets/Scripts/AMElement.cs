@@ -27,15 +27,18 @@ public class AMElement : MonoBehaviour
     {
         interval = AMCommon.interval;
         progress = 0;
-        renderer = GetComponent<Renderer>();
-        renderer.material.SetFloat("_Mode", 3);
-        renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        renderer.material.SetInt("_ZWrite", 0);
-        renderer.material.DisableKeyword("_ALPHATEST_ON");
-        renderer.material.DisableKeyword("_ALPHABLEND_ON");
-        renderer.material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-        renderer.material.renderQueue = 3000;
+        if (GetComponent<Renderer>())
+        {
+            renderer = GetComponent<Renderer>();
+            renderer.material.SetFloat("_Mode", 3);
+            renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            renderer.material.SetInt("_ZWrite", 0);
+            renderer.material.DisableKeyword("_ALPHATEST_ON");
+            renderer.material.DisableKeyword("_ALPHABLEND_ON");
+            renderer.material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            renderer.material.renderQueue = 3000;
+        }
     }
 
     // to に向かって今の位置から t 秒で進む
@@ -51,18 +54,41 @@ public class AMElement : MonoBehaviour
         }
         float buffer = 0f; // getIntervalに渡すやつ
         // 動きが終わるまでは while から抜けないこと
+        //while (false)
+        //{
+        //    // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
+        //    if (progress == 0)
+        //    {
+        //        dr = (to - transform.position) / t;
+        //        dr *= interval;
+        //        progress = -1;
+        //    }
+
+        //    Vector3 old = transform.position;
+        //    transform.position = transform.position + dr;
+        //    // 目的地にいけてるなら終了フラグを立てる
+        //    if (Vector3.Dot(to - old, to - transform.position) <= 0)
+        //    {
+        //        progress = 1;
+        //        transform.position = to; // 行き過ぎを修正 (cexen)
+        //        yield break;
+        //    }
+        //    yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
+        //}
+        float frames = t / interval;
+        float alpha = 30f / Mathf.Pow(frames,5f);
+        float f = 0;
         while (true)
         {
             // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
             if (progress == 0)
             {
-                dr = (to - transform.position) / t;
-                dr *= interval;
+                dr = (to - transform.position);
                 progress = -1;
             }
-
+            float vel = alpha * f * f * (f - frames) * (f-frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
             Vector3 old = transform.position;
-            transform.position = transform.position + dr;
+            transform.position = transform.position + dr * vel;
             // 目的地にいけてるなら終了フラグを立てる
             if (Vector3.Dot(to - old, to - transform.position) <= 0)
             {
@@ -71,6 +97,7 @@ public class AMElement : MonoBehaviour
                 yield break;
             }
             yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
+            f++;
         }
     }
     // オブジェクトを t 秒の間点滅させる
@@ -106,6 +133,31 @@ public class AMElement : MonoBehaviour
     // 速度調整するときは t を調整すれば良い
     public void moveWith(Vector3 to, float t)
     {
+        //if (t == 0)
+        //{
+        //    progress = 1;
+        //    transform.position = to;
+        //    return;
+        //}
+        //// 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
+        //if (progress == 0)
+        //{
+        //    dr = (to - transform.position) / t;
+        //    dr *= interval;
+        //    progress = -1;
+        //}
+
+        //Vector3 old = transform.position;
+        //transform.position = transform.position + dr;
+        //// 目的地にいけてるなら終了フラグを立てる
+        //if (Vector3.Dot(to - old, to - transform.position) <= 0)
+        //{
+        //    progress = 1;
+        //    transform.position = to; // 行き過ぎを修正 (cexen)
+        //}
+        float frames = t / interval;
+        float alpha = 30f / Mathf.Pow(frames, 5f);
+        float f = 0;
         if (t == 0)
         {
             progress = 1;
@@ -115,19 +167,20 @@ public class AMElement : MonoBehaviour
         // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
         if (progress == 0)
         {
-            dr = (to - transform.position) / t;
-            dr *= interval;
+            dr = (to - transform.position);
             progress = -1;
         }
 
+        float vel = alpha * f * f * (f - frames) * (f - frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
         Vector3 old = transform.position;
-        transform.position = transform.position + dr;
+        transform.position = transform.position + dr * vel;
         // 目的地にいけてるなら終了フラグを立てる
         if (Vector3.Dot(to - old, to - transform.position) <= 0)
         {
             progress = 1;
             transform.position = to; // 行き過ぎを修正 (cexen)
         }
+        f++;
     }
     public IEnumerator setColor(Color color, float t)
     {
