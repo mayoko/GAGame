@@ -18,6 +18,8 @@ public class AMGroup : MonoBehaviour {
     public GameObject genePrefab;
     // オブジェクトをまとめておくための配列
     private GameObject[] genes;
+    // カラー配列
+    private int[] colorArray;
     // genes の prefab
     public GameObject prefab;
     // 何秒周期で動かすか
@@ -35,6 +37,7 @@ public class AMGroup : MonoBehaviour {
         face = new GameObject();
         face = Instantiate(facePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         genes = new GameObject[geneSize];
+        colorArray = new int[geneSize];
         for (int i = 0; i < geneSize; i++)
         {
             // 指定した座標にオブジェクトを作る
@@ -95,6 +98,7 @@ public class AMGroup : MonoBehaviour {
     {
         for (int i = 0; i < v.Length; i++)
         {
+            colorArray[i] = v[i];
             switch (v[i])
             {
                 case -1:
@@ -144,6 +148,11 @@ public class AMGroup : MonoBehaviour {
         GameObject genePieces = Instantiate(genePrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
         genePieces.GetComponent<AMGenePieces>().setParams(r - l + 1, genes[l].transform.position);
         int[] vs = new int[r - l + 1];
+        for (int i = 0; i <= r - l; i++)
+        {
+            vs[i] = colorArray[i + l];
+        }
+        genePieces.GetComponent<AMGenePieces>().setColor(vs);
         return genePieces;
     }
 

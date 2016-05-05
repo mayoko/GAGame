@@ -63,9 +63,9 @@ public class AMtest : MonoBehaviour {
     private IEnumerator cross ()
     {
         //親の移動
-        r = 15;
         for (int i = 0; i < 50; i++) {
             if (fatherarray[i] == motherarray[i]) continue;
+            r = Random.Range(1, 29);
             father = geneObject[fatherarray[i]];
             mother = geneObject[motherarray[i]];
             yield return StartCoroutine (father.GetComponent<AMGroup> ().move (new Vector3 (0, 0, -100), 1f));
