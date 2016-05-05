@@ -27,15 +27,18 @@ public class AMElement : MonoBehaviour
     {
         interval = AMCommon.interval;
         progress = 0;
-        renderer = GetComponent<Renderer>();
-        renderer.material.SetFloat("_Mode", 3);
-        renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        renderer.material.SetInt("_ZWrite", 0);
-        renderer.material.DisableKeyword("_ALPHATEST_ON");
-        renderer.material.DisableKeyword("_ALPHABLEND_ON");
-        renderer.material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-        renderer.material.renderQueue = 3000;
+        if (GetComponent<Renderer>())
+        {
+            renderer = GetComponent<Renderer>();
+            renderer.material.SetFloat("_Mode", 3);
+            renderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            renderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            renderer.material.SetInt("_ZWrite", 0);
+            renderer.material.DisableKeyword("_ALPHATEST_ON");
+            renderer.material.DisableKeyword("_ALPHABLEND_ON");
+            renderer.material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            renderer.material.renderQueue = 3000;
+        }
     }
 
     // to に向かって今の位置から t 秒で進む
