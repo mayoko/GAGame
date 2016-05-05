@@ -6,7 +6,8 @@ public class AMtest : MonoBehaviour {
     int[] score;
     GameObject[] scoreobject;
     public GameObject element, kao;
-    GeneManager.ViewParam vp = GeneManager.viewParam;
+    GeneManager.ViewParam vp = GeneManager.viewParam; // UI表示用のグローバルパラメタの参照（短いあだ名をつけてるだけ）
+    public AMElement mcamera; // cameraが予約語っぽいのでmaincameraの意
 
     //遺伝子の配列情報（-1,0,1を適当な色に置き換えておく）
     int[][] colorarray;
@@ -20,7 +21,7 @@ public class AMtest : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    IEnumerator Start () {
         // input
         score = new int[50];
         for (int i = 0; i < 50; i++)
@@ -57,8 +58,11 @@ public class AMtest : MonoBehaviour {
         for (int i = 0; i < 50; i++) motherarray[i] = Random.Range(0, 50);
         for (int i = 0; i < 50; i++) fatherarray[i] = Random.Range(0, 50);
         //交叉の開始
-        StartCoroutine ("cross");
-        //SceneManager.LoadScene("SakeruCheese");
+        yield return StartCoroutine ("cross");
+        // カメラ移動テスト
+        yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
+        yield return new WaitForSeconds(3f/vp.playSpeed); // ちょっと待ってからSCに遷移
+        SceneManager.LoadScene("SakeruCheese");
     }
     private IEnumerator cross ()
     {
