@@ -66,6 +66,7 @@ public class AMElement : MonoBehaviour
             if (Vector3.Dot(to - old, to - transform.position) <= 0)
             {
                 progress = 1;
+                transform.position = to; // 行き過ぎを修正 (cexen)
                 yield break;
             }
             yield return new WaitForSeconds(interval);
@@ -123,6 +124,7 @@ public class AMElement : MonoBehaviour
         if (Vector3.Dot(to - old, to - transform.position) <= 0)
         {
             progress = 1;
+            transform.position = to; // 行き過ぎを修正 (cexen)
         }
     }
     public IEnumerator setColor(Color color, float t)
