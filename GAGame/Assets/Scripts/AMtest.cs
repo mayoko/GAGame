@@ -33,12 +33,14 @@ public class AMtest : MonoBehaviour {
         {
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (0, 0, i*15), Quaternion.identity) as GameObject;
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(0, 0, i*15), 0f));
             geneObject[i].GetComponent<AMGroup>().setColor(colorarray[i]);
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
         }
         for (int i=25; i<50; i++){
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (320, 0, (i-25)*15), Quaternion.identity) as GameObject;
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(320, 0, (i-25)*15), 0f));
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
             geneObject[i].GetComponent<AMGroup> ().setColor (colorarray [i]);
         }
