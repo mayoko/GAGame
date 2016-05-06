@@ -72,8 +72,8 @@ public class AMtest : MonoBehaviour {
             if (fatherarray[i] == motherarray[i]) continue;
             father = geneObject[fatherarray[i]];
             mother = geneObject[motherarray[i]];
-            yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, -100), 1f/vp.playSpeed));
-            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, -70), 1f/vp.playSpeed));
+            yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, -100), 0.5f/vp.playSpeed));
+            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, -70), 0.5f/vp.playSpeed));
             if (GeneManager.param.crossingMode == 0)
             {
                 //交叉ポイント
@@ -81,8 +81,8 @@ public class AMtest : MonoBehaviour {
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, 30 - 1);
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f/vp.playSpeed));
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2 };
                 yield return StartCoroutine(fadeOut(face, gogo));
             }
@@ -94,9 +94,9 @@ public class AMtest : MonoBehaviour {
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, q);
                 GameObject go3 = father.GetComponent<AMGroup>().getSegment(q + 1, 30 - 1);
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + q * 10, 0, -85), 1f/vp.playSpeed));
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + q * 10, 0, -85), 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2, go3 };
                 yield return StartCoroutine(fadeOut(face, gogo));
             }
@@ -127,7 +127,7 @@ public class AMtest : MonoBehaviour {
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
                 for (int j = 0; j < sz; j++)
                 {
-                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, -85), 1f/vp.playSpeed));
+                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, -85), 0.2f/vp.playSpeed));
                 }
                 yield return StartCoroutine(fadeOut(face, go));
             }
@@ -153,7 +153,7 @@ public class AMtest : MonoBehaviour {
     // 同時に複数の GenePieces と頭を自然消滅させる
     private IEnumerator fadeOut(GameObject face, GameObject[] gps)
     {
-        float fadeTime = 1f / vp.playSpeed;
+        float fadeTime = 0.2f / vp.playSpeed;
         float currentRemainTime = fadeTime;
         float interval = AMCommon.interval;
         int sz = gps.Length;
