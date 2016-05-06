@@ -179,6 +179,10 @@ public class AMtest : MonoBehaviour {
         }
     }
 
+    public void Skip()
+    {
+        SceneManager.LoadScene("SakeruCheese");
+    }
     // Update is called once per frame
     void Update()
     {
