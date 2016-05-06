@@ -21,6 +21,10 @@ public class AMElement : MonoBehaviour
     private Color dc;
     // 点滅時間を管理するための変数
     private float blinkElapsed;
+    // 緩急のあるmoveWithの状態を管理するための変数
+    private int moveWithF = 0;
+    // 緩急のあるmoveWithの最初の位置をとっておくための変数
+    private Vector3 moveWithFrom;
     private Renderer renderer;
 
     void Awake()
@@ -155,9 +159,10 @@ public class AMElement : MonoBehaviour
         //    progress = 1;
         //    transform.position = to; // 行き過ぎを修正 (cexen)
         //}
+        moveWithF++; // よって moveWithF >= 1
         float frames = t / interval;
-        float alpha = 30f / Mathf.Pow(frames, 5f);
-        float f = 0;
+        float alpha = 30f / Mathf.Pow(frames, 5);
+        float f = moveWithF; // 短く書きたいだけ
         if (t == 0)
         {
             progress = 1;
@@ -168,19 +173,20 @@ public class AMElement : MonoBehaviour
         if (progress == 0)
         {
             dr = (to - transform.position);
+            moveWithFrom = transform.position;
             progress = -1;
         }
 
-        float vel = alpha * f * f * (f - frames) * (f - frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
-        Vector3 old = transform.position;
-        transform.position = transform.position + dr * vel;
+        //float vel = alpha * f * f * (f - frames) * (f - frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
+        float ratio = alpha * f * f * f * (f * f / 5f - frames * f / 2f + frames * frames / 3f); // vの積分
+        transform.position = moveWithFrom + dr * ratio;
         // 目的地にいけてるなら終了フラグを立てる
-        if (Vector3.Dot(to - old, to - transform.position) <= 0)
+        if (ratio >= 1f)
         {
             progress = 1;
             transform.position = to; // 行き過ぎを修正 (cexen)
+            moveWithF = 0;
         }
-        f++;
     }
     public IEnumerator setColor(Color color, float t)
     {
