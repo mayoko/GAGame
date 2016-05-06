@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class AMSkipCheckboxController : MonoBehaviour {
-    public AMTestAnimation ta;
+    public AMtest ta;
     GeneManager.ViewParam vp = GeneManager.viewParam;
 
 	// Use this for initialization
