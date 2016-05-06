@@ -21,9 +21,9 @@ public class AMElement : MonoBehaviour
     private Color dc;
     // 点滅時間を管理するための変数
     private float blinkElapsed;
-    // 緩急のあるmoveWithの状態を管理するための変数
-    private int moveWithF = 0;
-    // 緩急のあるmoveWithの最初の位置をとっておくための変数
+    // 緩急のあるmoveWithの状態を管理するための変数たち
+    private int moveWithF;
+    private float frames, alpha;
     private Vector3 moveWithFrom;
     private Renderer renderer;
 
@@ -48,8 +48,8 @@ public class AMElement : MonoBehaviour
     // to に向かって今の位置から t 秒で進む
     // 速度調整するときは t を調整すれば良い
     // 単体で動かす場合はこちらを使う
-    // AMGroup に動くのを任せる場合は move を使う
-    public IEnumerator move(Vector3 to, float t)
+    // AMGroup に動くのを任せる場合は moveWith を使う
+    public IEnumerator move(Vector3 to, float t, bool mode) // mode false: Linear, true: Nonlinear
     {
         if (t == 0)
         {
@@ -57,53 +57,23 @@ public class AMElement : MonoBehaviour
             yield break;
         }
         float buffer = 0f; // getIntervalに渡すやつ
-        // 動きが終わるまでは while から抜けないこと
-        //while (false)
-        //{
-        //    // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
-        //    if (progress == 0)
-        //    {
-        //        dr = (to - transform.position) / t;
-        //        dr *= interval;
-        //        progress = -1;
-        //    }
-
-        //    Vector3 old = transform.position;
-        //    transform.position = transform.position + dr;
-        //    // 目的地にいけてるなら終了フラグを立てる
-        //    if (Vector3.Dot(to - old, to - transform.position) <= 0)
-        //    {
-        //        progress = 1;
-        //        transform.position = to; // 行き過ぎを修正 (cexen)
-        //        yield break;
-        //    }
-        //    yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
-        //}
-        float frames = t / interval;
-        float alpha = 30f / Mathf.Pow(frames,5f);
-        float f = 0;
         while (true)
         {
-            // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
-            if (progress == 0)
-            {
-                dr = (to - transform.position);
-                progress = -1;
-            }
-            float vel = alpha * f * f * (f - frames) * (f-frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
-            Vector3 old = transform.position;
-            transform.position = transform.position + dr * vel;
             // 目的地にいけてるなら終了フラグを立てる
-            if (Vector3.Dot(to - old, to - transform.position) <= 0)
+            if (mode ? moveWithNonlinear(to, t) : moveWithLinear(to, t))
             {
                 progress = 1;
                 transform.position = to; // 行き過ぎを修正 (cexen)
                 yield break;
             }
             yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
-            f++;
         }
     }
+    public IEnumerator move(Vector3 to, float t)
+    {
+        yield return move(to, t, true);
+    }
+
     // オブジェクトを t 秒の間点滅させる
     public IEnumerator blink(float t)
     {
@@ -135,58 +105,58 @@ public class AMElement : MonoBehaviour
     }
     // to に向かって今の位置から t 秒で進む
     // 速度調整するときは t を調整すれば良い
-    public void moveWith(Vector3 to, float t)
+    public void moveWith(Vector3 to, float t, bool mode) // mode false: Linear, true: Nonlinear
     {
-        //if (t == 0)
-        //{
-        //    progress = 1;
-        //    transform.position = to;
-        //    return;
-        //}
-        //// 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
-        //if (progress == 0)
-        //{
-        //    dr = (to - transform.position) / t;
-        //    dr *= interval;
-        //    progress = -1;
-        //}
-
-        //Vector3 old = transform.position;
-        //transform.position = transform.position + dr;
-        //// 目的地にいけてるなら終了フラグを立てる
-        //if (Vector3.Dot(to - old, to - transform.position) <= 0)
-        //{
-        //    progress = 1;
-        //    transform.position = to; // 行き過ぎを修正 (cexen)
-        //}
-        moveWithF++; // よって moveWithF >= 1
-        float frames = t / interval;
-        float alpha = 30f / Mathf.Pow(frames, 5);
-        float f = moveWithF; // 短く書きたいだけ
         if (t == 0)
         {
             progress = 1;
             transform.position = to;
             return;
         }
+        // 目的地にいけてるなら終了フラグを立てる
+        if (mode ? moveWithNonlinear(to, t) : moveWithLinear(to, t))
+        {
+            progress = 1;
+            transform.position = to; // 行き過ぎを修正 (cexen)
+        }
+    }
+    public void moveWith(Vector3 to, float t)
+    {
+        moveWith(to, t, true);
+    }
+    private bool moveWithLinear(Vector3 to, float t)
+    {
         // 初めて move が呼ばれたときは, 毎周期進む距離を dr で求めておく
+        if (progress == 0)
+        {
+            dr = (to - transform.position) / t;
+            dr *= interval;
+            progress = -1;
+        }
+        Vector3 old = transform.position;
+        transform.position = transform.position + dr;
+        return (Vector3.Dot(to - old, to - transform.position) <= 0);
+    }
+    private bool moveWithNonlinear(Vector3 to, float t)
+    {
+        // 初めて move が呼ばれたときは, いろいろなパラメタを求めておく
         if (progress == 0)
         {
             dr = (to - transform.position);
             moveWithFrom = transform.position;
+            frames = t / interval;
+            alpha = 30f / Mathf.Pow(frames, 5);
+            moveWithF = 0;
             progress = -1;
         }
+        moveWithF++; // よって moveWithF >= 1
+        float f = moveWithF; // 短く書きたいだけ
 
-        //float vel = alpha * f * f * (f - frames) * (f - frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数
+        //float vel = alpha * f * f * (f - frames) * (f - frames); // v = αf^2(f-frames)^2 : f=0,framesで極小をとり面積1の4次関数(たぶんsinより軽い)
         float ratio = alpha * f * f * f * (f * f / 5f - frames * f / 2f + frames * frames / 3f); // vの積分
         transform.position = moveWithFrom + dr * ratio;
         // 目的地にいけてるなら終了フラグを立てる
-        if (ratio >= 1f)
-        {
-            progress = 1;
-            transform.position = to; // 行き過ぎを修正 (cexen)
-            moveWithF = 0;
-        }
+        return (ratio >= 1f);
     }
     public IEnumerator setColor(Color color, float t)
     {
