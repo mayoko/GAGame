@@ -53,12 +53,14 @@ public class GeneCalcController : MonoBehaviour {
 		for (int i = 0; i < childNum; i++) {
 			players [surviveNum + i].gene = childGene [i];
 		}
-        Debug.Log("gene clac completed!");
+        Debug.Log("gene calc completed!");
+        // Skip中なら即座にSCに遷移
+        if (GeneManager.viewParam.isSkipping) SceneManager.LoadScene("SakeruCheese");
     }
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         
     }
 
