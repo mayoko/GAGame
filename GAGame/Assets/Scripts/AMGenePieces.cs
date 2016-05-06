@@ -30,7 +30,7 @@ public class AMGenePieces : MonoBehaviour
     // 要するに初期化してくれる
     void Awake()
     {
-        interval = 0.01f;
+        interval = AMCommon.interval;
         geneSize = 0;
         gameObjects = new GameObject[geneSize];
         for (int i = 0; i < geneSize; i++)
@@ -66,6 +66,7 @@ public class AMGenePieces : MonoBehaviour
     // 速度調整するときは t を調整すれば良い
     public IEnumerator move(Vector3 to, float t)
     {
+        float buffer = 0f; // getIntervalに渡すやつ
         // 動きが終わるまでは while から抜けないこと
         while (true)
         {
@@ -82,7 +83,7 @@ public class AMGenePieces : MonoBehaviour
                 Debug.Log("finish!");
                 yield break;
             }
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
         }
     }
     // 配列で指定されたオブジェクトを t 秒間点滅させる
@@ -90,6 +91,7 @@ public class AMGenePieces : MonoBehaviour
     {
         if (v == null)
             yield break;
+        float buffer = 0f; // getIntervalに渡すやつ
         while (true)
         {
             for (int i = 0; i < v.Length; i++)
@@ -107,7 +109,7 @@ public class AMGenePieces : MonoBehaviour
                 yield break;
             }
             // 10 は適当
-            yield return new WaitForSeconds(10 * interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(10 * interval, ref buffer));
         }
     }
     // 配列を与えられるので, genes の色を変更する

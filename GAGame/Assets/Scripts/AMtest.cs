@@ -6,7 +6,8 @@ public class AMtest : MonoBehaviour {
     int[] score;
     GameObject[] scoreobject;
     public GameObject element, kao;
-    GeneManager.ViewParam vp = GeneManager.viewParam;
+    GeneManager.ViewParam vp = GeneManager.viewParam; // UI表示用のグローバルパラメタの参照（短いあだ名をつけてるだけ）
+    public AMElement mcamera; // cameraが予約語っぽいのでmaincameraの意
 
     //遺伝子の配列情報（-1,0,1を適当な色に置き換えておく）
     int[][] colorarray;
@@ -20,7 +21,7 @@ public class AMtest : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    IEnumerator Start () {
         // input
         score = new int[50];
         for (int i = 0; i < 50; i++)
@@ -57,8 +58,11 @@ public class AMtest : MonoBehaviour {
         for (int i = 0; i < 50; i++) motherarray[i] = Random.Range(0, 50);
         for (int i = 0; i < 50; i++) fatherarray[i] = Random.Range(0, 50);
         //交叉の開始
-        StartCoroutine ("cross");
-        //SceneManager.LoadScene("SakeruCheese");
+        yield return StartCoroutine ("cross");
+        // カメラ移動テスト
+        yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
+        yield return new WaitForSeconds(3f/vp.playSpeed); // ちょっと待ってからSCに遷移
+        SceneManager.LoadScene("SakeruCheese");
     }
     private IEnumerator cross ()
     {
@@ -68,8 +72,8 @@ public class AMtest : MonoBehaviour {
             if (fatherarray[i] == motherarray[i]) continue;
             father = geneObject[fatherarray[i]];
             mother = geneObject[motherarray[i]];
-            yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, -100), 1f/vp.playSpeed));
-            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, -70), 1f/vp.playSpeed));
+            yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, -100), 0.5f/vp.playSpeed));
+            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, -70), 0.5f/vp.playSpeed));
             if (GeneManager.param.crossingMode == 0)
             {
                 //交叉ポイント
@@ -77,22 +81,22 @@ public class AMtest : MonoBehaviour {
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, 30 - 1);
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f/vp.playSpeed));
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2 };
                 yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 1)
             {
                 // 交叉ポイント
-                int r = Random.Range(2, 27), q = Random.Range(r, 29);
+                int r = Random.Range(2, 27), q = Random.Range(r + 1, 29);
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, q);
                 GameObject go3 = father.GetComponent<AMGroup>().getSegment(q + 1, 30 - 1);
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 1f/vp.playSpeed));
-                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + q * 10, 0, -85), 1f/vp.playSpeed));
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + q * 10, 0, -85), 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2, go3 };
                 yield return StartCoroutine(fadeOut(face, gogo));
             }
@@ -123,7 +127,7 @@ public class AMtest : MonoBehaviour {
                 GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
                 for (int j = 0; j < sz; j++)
                 {
-                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, -85), 1f/vp.playSpeed));
+                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, -85), 0.2f/vp.playSpeed));
                 }
                 yield return StartCoroutine(fadeOut(face, go));
             }
@@ -149,14 +153,15 @@ public class AMtest : MonoBehaviour {
     // 同時に複数の GenePieces と頭を自然消滅させる
     private IEnumerator fadeOut(GameObject face, GameObject[] gps)
     {
-        float fadeTime = 1f / vp.playSpeed;
+        float fadeTime = 0.2f / vp.playSpeed;
         float currentRemainTime = fadeTime;
-        float interval = 0.01f;
+        float interval = AMCommon.interval;
         int sz = gps.Length;
+        float buffer = 0f; // getIntervalに渡すやつ
         while (true)
         {
             currentRemainTime -= interval;
-            Debug.Log(currentRemainTime);
+            // Debug.Log(currentRemainTime);
             if (currentRemainTime <= 0f)
             {
                 Destroy(face);
@@ -170,7 +175,7 @@ public class AMtest : MonoBehaviour {
             float alpha = currentRemainTime / fadeTime;
             face.GetComponent<AMElement>().setAlpha(alpha);
             for (int i = 0; i < sz; i++) gps[i].GetComponent<AMGenePieces>().setAlpha(alpha);
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(AMCommon.getInterval(interval, ref buffer));
         }
     }
 
