@@ -13,6 +13,7 @@ public class AMtest : MonoBehaviour {
     int[][] colorarray;
     // 親の数
     int parentNum;
+    const int TURN = 20;
 
     GameObject[] geneObject;
 
@@ -26,7 +27,7 @@ public class AMtest : MonoBehaviour {
     IEnumerator Start () {
         // 親の数を求める
         Debug.Log(GeneManager.param.selectionMode);
-        if (GeneManager.param.selectionMode <= 0) parentNum = 10;
+        if (GeneManager.param.selectionMode <= 1) parentNum = 10;
         else parentNum = (int)(GeneManager.param.playerNum * 0.2);
         // 偶数にしておく
         if (parentNum % 2 == 1) parentNum++;
@@ -34,9 +35,10 @@ public class AMtest : MonoBehaviour {
         score = new int[parentNum];
         for (int i = 0; i < parentNum; i++)
         {
-            score[i] = Random.Range(0, parentNum);
+            score[i] = Random.Range(0, 50);
         }
         System.Array.Sort(score);
+        System.Array.Reverse(score);
         colorarray = new int[parentNum][];
         for (int i = 0; i < parentNum; i++) {
             colorarray[i] = new int[30];
@@ -62,10 +64,10 @@ public class AMtest : MonoBehaviour {
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
             geneObject[i].GetComponent<AMGroup> ().setColor (colorarray [i]);
         }
-        fatherarray = new int[parentNum];
-        motherarray = new int[parentNum];
-        for (int i = 0; i < parentNum; i++) motherarray[i] = Random.Range(0, parentNum);
-        for (int i = 0; i < parentNum; i++) fatherarray[i] = Random.Range(0, parentNum);
+        fatherarray = new int[TURN];
+        motherarray = new int[TURN];
+        for (int i = 0; i < TURN; i++) motherarray[i] = Random.Range(0, parentNum);
+        for (int i = 0; i < TURN; i++) fatherarray[i] = Random.Range(0, parentNum);
         //交叉の開始
         yield return StartCoroutine ("cross");
         // カメラ移動テスト
@@ -76,22 +78,35 @@ public class AMtest : MonoBehaviour {
     private IEnumerator cross ()
     {
         //親の移動
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < TURN; i++)
         {
             if (fatherarray[i] == motherarray[i]) continue;
             father = geneObject[fatherarray[i]];
             mother = geneObject[motherarray[i]];
-            yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, -100), 0.5f/vp.playSpeed));
-            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, -70), 0.5f/vp.playSpeed));
+            Vector3 fatherDestination;
+            Vector3 motherDestination;
+            Vector3 faceDestination;
+            if (i < TURN/2)
+            {
+                fatherDestination = new Vector3(0, 0, -200 - i * 15);
+                motherDestination = new Vector3(0, 0, -170 - i * 15);
+            } else
+            {
+                fatherDestination = new Vector3(320, 0, -200 - (i-TURN/2) * 15);
+                motherDestination = new Vector3(320, 0, -170 - (i-TURN/2) * 15);
+            }
+            faceDestination = (fatherDestination + motherDestination) / 2;
+            yield return StartCoroutine(father.GetComponent<AMGroup>().move(fatherDestination, 0.5f / vp.playSpeed));
+            yield return StartCoroutine(mother.GetComponent<AMGroup>().move(motherDestination, 0.5f/vp.playSpeed));
             if (GeneManager.param.crossingMode == 0)
             {
                 //交叉ポイント
                 int r = Random.Range(1, 29);
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, 30 - 1);
-                GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
+                GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2 };
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
@@ -102,10 +117,10 @@ public class AMtest : MonoBehaviour {
                 GameObject go1 = father.GetComponent<AMGroup>().getSegment(0, r);
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, q);
                 GameObject go3 = father.GetComponent<AMGroup>().getSegment(q + 1, 30 - 1);
-                GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
-                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, -85), 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + r * 10, 0, -85), 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + 7 + q * 10, 0, -85), 0.2f/vp.playSpeed));
+                GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
+                yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + q * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2, go3 };
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
@@ -133,10 +148,10 @@ public class AMtest : MonoBehaviour {
                         go[j] = mother.GetComponent<AMGroup>().getSegment(vs[j]+1, vs[j + 1]);
                     }
                 }
-                GameObject face = Instantiate(kao, new Vector3(0, 0, -85), Quaternion.identity) as GameObject;
+                GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
                 for (int j = 0; j < sz; j++)
                 {
-                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, -85), 0.2f/vp.playSpeed));
+                    yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 }
                 //yield return StartCoroutine(fadeOut(face, go));
             }
