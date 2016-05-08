@@ -59,6 +59,7 @@ public class GeneManager : MonoBehaviour {
                 players[i].gene[j] = random[Random.Range(0, 3)];
             }
         }
+        viewParam.generation = 0;
     }
 
     // Use this for initialization
