@@ -98,6 +98,12 @@ public class SCGameController : MonoBehaviour {
         //}
         Time.timeScale = GeneManager.viewParam.playSpeed;
         if (Input.GetKey("space")) Time.timeScale *= 4;
+
+        // space キー押したらタイトルへ戻る
+        if (Input.GetKey(KeyCode.Space))
+        {
+            SceneManager.LoadScene("GameMain");
+        }
     }
 
     void FixedUpdate()
