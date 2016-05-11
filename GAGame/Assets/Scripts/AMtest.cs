@@ -107,7 +107,7 @@ public class AMtest : MonoBehaviour {
                 GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
                 yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                GameObject[] gogo = { go1, go2 };
+                //GameObject[] gogo = { go1, go2 };
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 1)
@@ -121,7 +121,7 @@ public class AMtest : MonoBehaviour {
                 yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + q * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                GameObject[] gogo = { go1, go2, go3 };
+                //GameObject[] gogo = { go1, go2, go3 };
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 2)
@@ -210,7 +210,7 @@ public class AMtest : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Q))
         {
             SceneManager.LoadScene("GameMain");
         }
