@@ -116,6 +116,7 @@ public class AMtest : MonoBehaviour {
                 yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + (r+1) * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2 };
                 yield return StartCoroutine(blink(gogo, vv, 0.5f/vp.playSpeed));
+                colorChange(gogo, vv);
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 1)
@@ -131,6 +132,7 @@ public class AMtest : MonoBehaviour {
                 yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + (q+1) * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 GameObject[] gogo = { go1, go2, go3 };
                 yield return StartCoroutine(blink(gogo, vv, 0.5f/vp.playSpeed));
+                colorChange(gogo, vv);
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 2)
@@ -162,6 +164,8 @@ public class AMtest : MonoBehaviour {
                 {
                     yield return StartCoroutine(go[j].GetComponent<AMGenePieces>().move(new Vector3(12+(vs[j]+1)*10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
                 }
+                yield return StartCoroutine(blink(go, vv, 0.5f/vp.playSpeed));
+                colorChange(go, vv);
                 //yield return StartCoroutine(fadeOut(face, go));
             }
             if (fatherarray[i] < parentNum/2)
@@ -179,6 +183,26 @@ public class AMtest : MonoBehaviour {
             else
             {
                 yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - parentNum/2) * 15), 0f));
+            }
+        }
+    }
+    private void colorChange(GameObject[] gps, int[] vs)
+    {
+
+        int length = gps.Length;
+        int now = 0;
+        for (int i = 0; i < length; i++)
+        {
+            int len = gps[i].GetComponent<AMGenePieces>().Length();
+            for (int j = 0; j < len; j++)
+            {
+                if (vs[now++] == 1)
+                {
+                    int random = Random.Range(0, 3);
+                    if (random == 0) gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().material.color = Color.red;
+                    else if (random == 1) gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().material.color = Color.green;
+                    else gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().material.color = Color.blue;
+                }
             }
         }
     }
@@ -211,8 +235,8 @@ public class AMtest : MonoBehaviour {
                     if (vs[now++] == 1) gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().enabled = !gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().enabled;
                 }
             }
-            remainTime -= 0.05f/vp.playSpeed;
-            yield return new WaitForSeconds(0.05f/vp.playSpeed);
+            remainTime -= 0.05f / vp.playSpeed;
+            yield return new WaitForSeconds(0.05f / vp.playSpeed);
         }
         yield break;
     }
