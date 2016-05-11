@@ -164,13 +164,13 @@ public class GeneCalcController : MonoBehaviour {
 	void cross(sbyte[] father, sbyte[] mother, out sbyte[] child, out int[] cross_array) {
 		child = new sbyte[geneSize];
 		switch (crossOption) {
-		case 1: 
+		case 0: 
 			int onecross_point = UnityEngine.Random.Range(0, geneSize);
 			child = one_cross(father, mother, onecross_point);
 			cross_array = new int[1];
 			cross_array[0] = onecross_point;
 			break;
-		case 2:
+		case 1:
 			int crossstart = UnityEngine.Random.Range(0, geneSize);
 			int crossgoal = UnityEngine.Random.Range(crossstart, geneSize);
 			child = double_cross(father, mother, crossstart, crossgoal);
