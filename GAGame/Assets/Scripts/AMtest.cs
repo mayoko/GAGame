@@ -98,6 +98,13 @@ public class AMtest : MonoBehaviour {
             faceDestination = (fatherDestination + motherDestination) / 2;
             yield return StartCoroutine(father.GetComponent<AMGroup>().move(fatherDestination, 0.5f / vp.playSpeed));
             yield return StartCoroutine(mother.GetComponent<AMGroup>().move(motherDestination, 0.5f/vp.playSpeed));
+            // 突然変位用配列
+            int[] vv = new int[30];
+            for (int j = 0; j < 30; j++)
+            {
+                if (Random.Range(0.0f, 1.0f) < GeneManager.param.mutationRate) vv[j] = 1;
+                else vv[j] = 0;
+            }
             if (GeneManager.param.crossingMode == 0)
             {
                 //交叉ポイント
@@ -106,8 +113,9 @@ public class AMtest : MonoBehaviour {
                 GameObject go2 = mother.GetComponent<AMGroup>().getSegment(r + 1, 30 - 1);
                 GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
                 yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                //GameObject[] gogo = { go1, go2 };
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + (r+1) * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                GameObject[] gogo = { go1, go2 };
+                yield return StartCoroutine(blink(gogo, vv, 0.5f/vp.playSpeed));
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 1)
@@ -119,9 +127,10 @@ public class AMtest : MonoBehaviour {
                 GameObject go3 = father.GetComponent<AMGroup>().getSegment(q + 1, 30 - 1);
                 GameObject face = Instantiate(kao, faceDestination, Quaternion.identity) as GameObject;
                 yield return StartCoroutine(go1.GetComponent<AMGenePieces>().move(new Vector3(12, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + r * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + q * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
-                //GameObject[] gogo = { go1, go2, go3 };
+                yield return StartCoroutine(go2.GetComponent<AMGenePieces>().move(new Vector3(12 + (r+1) * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                yield return StartCoroutine(go3.GetComponent<AMGenePieces>().move(new Vector3(12 + (q+1) * 10, 0, 0) + faceDestination, 0.2f/vp.playSpeed));
+                GameObject[] gogo = { go1, go2, go3 };
+                yield return StartCoroutine(blink(gogo, vv, 0.5f/vp.playSpeed));
                 //yield return StartCoroutine(fadeOut(face, gogo));
             }
             else if (GeneManager.param.crossingMode == 2)
@@ -172,6 +181,40 @@ public class AMtest : MonoBehaviour {
                 yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - parentNum/2) * 15), 0f));
             }
         }
+    }
+    // vs は 30 要素の配列で 0 or 1
+    // gps は 点滅する可能性のあるオブジェクト
+    private IEnumerator blink(GameObject[] gps, int[] vs, float t)
+    {
+        float remainTime = t;
+        int length = gps.Length;
+        while (true)
+        {
+            if (remainTime < 0)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    int len = gps[i].GetComponent<AMGenePieces>().Length();
+                    for (int j = 0; j < len; j++)
+                    {
+                        gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().enabled = true;
+                    }
+                }
+                break;
+            }
+            int now = 0;
+            for (int i = 0; i < length; i++)
+            {
+                int len = gps[i].GetComponent<AMGenePieces>().Length();
+                for (int j = 0; j < len; j++)
+                {
+                    if (vs[now++] == 1) gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().enabled = !gps[i].GetComponent<AMGenePieces>().get(j).GetComponent<Renderer>().enabled;
+                }
+            }
+            remainTime -= 0.05f/vp.playSpeed;
+            yield return new WaitForSeconds(0.05f/vp.playSpeed);
+        }
+        yield break;
     }
     // 交差専用
     // 同時に複数の GenePieces と頭を自然消滅させる
