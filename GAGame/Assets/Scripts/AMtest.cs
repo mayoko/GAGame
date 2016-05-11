@@ -80,7 +80,7 @@ public class AMtest : MonoBehaviour {
         //親の移動
         for (int i = 0; i < TURN; i++)
         {
-            if (fatherarray[i] == motherarray[i]) continue;
+            if (fatherarray[i] == motherarray[i]) motherarray[i] = (fatherarray[i]+1)%parentNum;
             father = geneObject[fatherarray[i]];
             mother = geneObject[motherarray[i]];
             Vector3 fatherDestination;
