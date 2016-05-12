@@ -14,6 +14,7 @@ public class SCGameController : MonoBehaviour {
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     //private int firstFrame; // frame数計測用
 	int testFrame; //加速したりしてもスコアをカウントできるように
+	private int alive;
 
 	public GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern0;
@@ -78,7 +79,7 @@ public class SCGameController : MonoBehaviour {
     void Update()
     {
         // 残存Player数カウント
-        int alive = GameObject.FindGameObjectsWithTag("Player").Length;
+        alive = GameObject.FindGameObjectsWithTag("Player").Length;
 
         // UI表示
         scoreLabel.text = "Score: " + getScore().ToString() + " / " + getMaxScore().ToString();
@@ -111,7 +112,7 @@ public class SCGameController : MonoBehaviour {
         //Enemy生成処理
         if (getCurrentFrame() >= enemyFrame) EnemyAppear();
 
-        testFrame++;
+		if (alive > 0) testFrame++;
     }
 
     void finishGame()
