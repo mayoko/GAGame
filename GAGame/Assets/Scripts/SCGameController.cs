@@ -100,7 +100,7 @@ public class SCGameController : MonoBehaviour {
         if (Input.GetKey("space")) Time.timeScale *= 4;
 
         // space キー押したらタイトルへ戻る
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Q))
         {
             SceneManager.LoadScene("GameMain");
         }

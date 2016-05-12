@@ -40,6 +40,11 @@ public class AMGenePieces : MonoBehaviour
             gameObjects[i] = Instantiate(prefab, new Vector3(cubeSize * i, 0, 0), Quaternion.identity) as GameObject;
         }
     }
+    // i 番目の gameObject を取り出す
+    public GameObject get(int i)
+    {
+        return gameObjects[i];
+    }
     // 先頭の遺伝子がある場所を返す
     public Vector3 pos()
     {
