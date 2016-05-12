@@ -13,8 +13,9 @@ public class SCGameController : MonoBehaviour {
     public int fpg = 5; // Frames per Gene. 1geneの指示する動作を何フレーム継続するか
     public int finalFrame; // 今ゲームの最終フレーム．PlayerオブジェクトなどがGeneManagerに依存するのはよくないのでgcが情報を持っておく
     //private int firstFrame; // frame数計測用
-	int testFrame; //加速したりしてもスコアをカウントできるように
+	private int testFrame; //加速したりしてもスコアをカウントできるように
 	private int alive;
+	private int lastAliveFrame = 0;
 
 	public GameObject sakeruEnemyObject;
 	public TextAsset enemyPattern0;
@@ -112,11 +113,12 @@ public class SCGameController : MonoBehaviour {
         //Enemy生成処理
         if (getCurrentFrame() >= enemyFrame) EnemyAppear();
 
-		if (alive > 0) testFrame++;
+		testFrame++;
     }
 
     void finishGame()
     {
+		if(lastAliveFrame==0) lastAliveFrame = testFrame;
         // Scoreの更新はひとまず止めなくていいや
         // 高速実行の際は即終了するようなオプションをParamにつけてもらいたい予定
         if (!GeneManager.viewParam.isSkipping)
@@ -129,16 +131,21 @@ public class SCGameController : MonoBehaviour {
     }
 
     // 現在のframe番号を自分で数えると他のオブジェクトとの実行順が気になるのでUnityに頼る
-    public int getCurrentFrame()
-    {
-        //return Time.frameCount - firstFrame; // 0はじまり
-        return testFrame;
-    }
+    public int getCurrentFrame ()
+	{
+		//return Time.frameCount - firstFrame; // 0はじまり
+		return testFrame;
+	}
+
 
     // 今後の拡張性を考えて大げさにscore取得関数
     public int getScore()
     {
-        return getCurrentFrame() + 1; // 生き残っているフレーム数
+		if (alive > 0) {
+			return getCurrentFrame () + 1; // 生き残っているフレーム数
+		} else {
+			return lastAliveFrame;
+		}
     }
     public int getMaxScore()
     {
