@@ -49,6 +49,7 @@ public class GeneCalcController : MonoBehaviour {
 		geneCalc ();
 		for (int i = 0; i < surviveNum; i++) {
 			players [i].gene = surviveGene [i];
+			Debug.Log (i);
 		}
 		for (int i = 0; i < childNum; i++) {
 			players [surviveNum + i].gene = childGene [i];
@@ -80,6 +81,7 @@ public class GeneCalcController : MonoBehaviour {
 		surviveGene = new sbyte[surviveNum][];
 		for (int i = 0; i < surviveNum; i++) {
 			surviveGene [i] = players [i].gene;
+
 		}
 
 		for (int i = 0; i < childNum; i++) {
