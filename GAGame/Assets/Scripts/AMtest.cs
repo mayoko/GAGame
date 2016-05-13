@@ -40,12 +40,21 @@ public class AMtest : MonoBehaviour {
         }
         System.Array.Sort(score);
         System.Array.Reverse(score);
+        GeneManager.Player[] players = new GeneManager.Player[GeneManager.param.playerNum];
+        GeneManager.players.CopyTo(players, 0);
+		System.Array.Sort (players, 
+			delegate(GeneManager.Player p1, GeneManager.Player p2) {
+				return p2.score.CompareTo (p1.score);
+			}
+		);
         colorarray = new int[parentNum][];
         for (int i = 0; i < parentNum; i++) {
+            int div = GeneManager.param.playFrame/30;
             colorarray[i] = new int[30];
             for (int j = 0; j < 30; j++)
             {
-                colorarray[i][j] = Random.Range(-1, 1+1);
+                //colorarray[i][j] = Random.Range(-1, 1+1);
+                colorarray[i][j] = players[i].gene[j*div];
             }
         }
         //親の遺伝子集団の作成(並べるだけ)
@@ -72,7 +81,7 @@ public class AMtest : MonoBehaviour {
         //交叉の開始
         yield return StartCoroutine ("cross");
         // カメラ移動テスト
-        yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
+        //yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
         yield return new WaitForSeconds(3f/vp.playSpeed); // ちょっと待ってからSCに遷移
         SceneManager.LoadScene("SakeruCheese");
     }
