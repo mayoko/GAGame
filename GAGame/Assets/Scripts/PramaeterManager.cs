@@ -81,6 +81,7 @@ public class PramaeterManager : MonoBehaviour {
 	public void changeFPG()
 	{
 		GeneManager.param.framePerGene=(int)FPGSlider.value;
+		GeneManager.param.playFrame = 750 / GeneManager.param.framePerGene;
 		FPGValue.text = GeneManager.param.framePerGene.ToString();
 		PatternDropdown.value = 3;
 	}
