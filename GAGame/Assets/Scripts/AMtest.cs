@@ -27,7 +27,8 @@ public class AMtest : MonoBehaviour {
     IEnumerator Start () {
         // 親の数を求める
         Debug.Log(GeneManager.param.selectionMode);
-        if (GeneManager.param.selectionMode <= 1) parentNum = 10;
+        if (GeneManager.param.selectionMode == 0) parentNum = System.Math.Min(36, GeneManager.param.playerNum);
+        else if (GeneManager.param.selectionMode == 1) parentNum = 10;
         else parentNum = (int)(GeneManager.param.playerNum * 0.2);
         // 偶数にしておく
         if (parentNum % 2 == 1) parentNum++;
@@ -53,14 +54,14 @@ public class AMtest : MonoBehaviour {
         {
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (0, 0, i*15), Quaternion.identity) as GameObject;
-            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(0, 0, i*15), 0f));
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(0, 0, (i-10)*15), 0f));
             geneObject[i].GetComponent<AMGroup>().setColor(colorarray[i]);
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
         }
         for (int i=parentNum/2; i<parentNum; i++){
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (320, 0, (i-parentNum/2)*15), Quaternion.identity) as GameObject;
-            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(320, 0, (i-parentNum/2)*15), 0f));
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(320, 0, (i-10-parentNum/2)*15), 0f));
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
             geneObject[i].GetComponent<AMGroup> ().setColor (colorarray [i]);
         }
@@ -170,19 +171,19 @@ public class AMtest : MonoBehaviour {
             }
             if (fatherarray[i] < parentNum/2)
             {
-                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, fatherarray[i] * 15), 0f));
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, (fatherarray[i]-10) * 15), 0f));
             }
             else
             {
-                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(320, 0, (fatherarray[i] - parentNum/2) * 15), 0f));
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(320, 0, (fatherarray[i] - 10 - parentNum/2) * 15), 0f));
             }
             if (motherarray[i] < parentNum/2)
             {
-                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, motherarray[i] * 15), 0f));
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, (motherarray[i] - 10) * 15), 0f));
             }
             else
             {
-                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - parentNum/2) * 15), 0f));
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - 10 - parentNum/2) * 15), 0f));
             }
         }
     }
