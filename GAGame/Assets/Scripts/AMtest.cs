@@ -27,7 +27,8 @@ public class AMtest : MonoBehaviour {
     IEnumerator Start () {
         // 親の数を求める
         Debug.Log(GeneManager.param.selectionMode);
-        if (GeneManager.param.selectionMode <= 1) parentNum = 10;
+        if (GeneManager.param.selectionMode == 0) parentNum = System.Math.Min(36, GeneManager.param.playerNum);
+        else if (GeneManager.param.selectionMode == 1) parentNum = 10;
         else parentNum = (int)(GeneManager.param.playerNum * 0.2);
         // 偶数にしておく
         if (parentNum % 2 == 1) parentNum++;
@@ -39,12 +40,21 @@ public class AMtest : MonoBehaviour {
         }
         System.Array.Sort(score);
         System.Array.Reverse(score);
+        GeneManager.Player[] players = new GeneManager.Player[GeneManager.param.playerNum];
+        GeneManager.players.CopyTo(players, 0);
+		System.Array.Sort (players, 
+			delegate(GeneManager.Player p1, GeneManager.Player p2) {
+				return p2.score.CompareTo (p1.score);
+			}
+		);
         colorarray = new int[parentNum][];
         for (int i = 0; i < parentNum; i++) {
+            int div = GeneManager.param.playFrame/30;
             colorarray[i] = new int[30];
             for (int j = 0; j < 30; j++)
             {
-                colorarray[i][j] = Random.Range(-1, 1+1);
+                //colorarray[i][j] = Random.Range(-1, 1+1);
+                colorarray[i][j] = players[i].gene[j*div];
             }
         }
         //親の遺伝子集団の作成(並べるだけ)
@@ -53,14 +63,14 @@ public class AMtest : MonoBehaviour {
         {
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (0, 0, i*15), Quaternion.identity) as GameObject;
-            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(0, 0, i*15), 0f));
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(0, 0, (i-10)*15), 0f));
             geneObject[i].GetComponent<AMGroup>().setColor(colorarray[i]);
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
         }
         for (int i=parentNum/2; i<parentNum; i++){
             geneObject[i] = new GameObject();
             geneObject[i] = Instantiate(element, new Vector3 (320, 0, (i-parentNum/2)*15), Quaternion.identity) as GameObject;
-            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(320, 0, (i-parentNum/2)*15), 0f));
+            StartCoroutine(geneObject[i].GetComponent<AMGroup>().move(new Vector3(320, 0, (i-10-parentNum/2)*15), 0f));
             geneObject[i].GetComponent<AMGroup> ().setScore (score[i]);
             geneObject[i].GetComponent<AMGroup> ().setColor (colorarray [i]);
         }
@@ -71,7 +81,7 @@ public class AMtest : MonoBehaviour {
         //交叉の開始
         yield return StartCoroutine ("cross");
         // カメラ移動テスト
-        yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
+        //yield return StartCoroutine(mcamera.move(mcamera.transform.position + new Vector3(0, 0, -500), 3f/vp.playSpeed));
         yield return new WaitForSeconds(3f/vp.playSpeed); // ちょっと待ってからSCに遷移
         SceneManager.LoadScene("SakeruCheese");
     }
@@ -170,19 +180,19 @@ public class AMtest : MonoBehaviour {
             }
             if (fatherarray[i] < parentNum/2)
             {
-                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, fatherarray[i] * 15), 0f));
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(0, 0, (fatherarray[i]-10) * 15), 0f));
             }
             else
             {
-                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(320, 0, (fatherarray[i] - parentNum/2) * 15), 0f));
+                yield return StartCoroutine(father.GetComponent<AMGroup>().move(new Vector3(320, 0, (fatherarray[i] - 10 - parentNum/2) * 15), 0f));
             }
             if (motherarray[i] < parentNum/2)
             {
-                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, motherarray[i] * 15), 0f));
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(0, 0, (motherarray[i] - 10) * 15), 0f));
             }
             else
             {
-                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - parentNum/2) * 15), 0f));
+                yield return StartCoroutine(mother.GetComponent<AMGroup>().move(new Vector3(320, 0, (motherarray[i] - 10 - parentNum/2) * 15), 0f));
             }
         }
     }
