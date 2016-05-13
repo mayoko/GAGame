@@ -104,6 +104,7 @@ public class SCGameController : MonoBehaviour {
         // space キー押したらタイトルへ戻る
         if (Input.GetKey(KeyCode.Q))
         {
+			GeneManager.viewParam.playSpeed = 1;
             SceneManager.LoadScene("GameMain");
         }
 
