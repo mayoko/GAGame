@@ -108,7 +108,7 @@ public class PramaeterManager : MonoBehaviour {
 			GroupSizeValue.text = GeneManager.param.playerNum.ToString ();
 			GroupSizeSlider.value = (float)GeneManager.param.playerNum;
 
-			GeneManager.param.mutationRate = 0.01f;
+			GeneManager.param.mutationRate = 0.03f;
 			MutationRateValue.text = GeneManager.param.mutationRate.ToString ("#0.##%");
 			MutationRateSlider.value = (float)Math.Log10 (GeneManager.param.mutationRate);
 

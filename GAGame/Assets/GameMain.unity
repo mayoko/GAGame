@@ -2138,6 +2138,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: HARD
       m_Image: {fileID: 0}
+    - m_Text: VERY HARD
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6848,9 +6850,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1279822701}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 30
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 5
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

@@ -106,7 +106,20 @@ public class SCGameController : MonoBehaviour {
         {
             SceneManager.LoadScene("GameMain");
         }
-    }
+
+		if (Input.GetKey(KeyCode.E))
+		{
+			float enemyX;
+			enemyX = 11.0f;
+			Vector3 enemyAngle = new Vector3( 0.0f, 0.0f, 0.0f );
+			GameObject enemy = Instantiate(sakeruEnemyObject,
+				new Vector3(enemyX, 0.0f, 0.0f),
+				Quaternion.Euler(enemyAngle)) as GameObject;
+			SCEnemyController scec = enemy.GetComponent<SCEnemyController>();
+			scec.enemySpeed = 50;
+			scec.transform.localScale = new Vector3(1.0f, 1.0f, 7.0f);
+		}
+	}
 
     void FixedUpdate()
     {
